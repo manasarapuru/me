@@ -3797,8 +3797,96 @@ ul.modal-chips li + li {
   color: var(--ink-2);
 }
 
-/* About popup: a vertical timeline of chapters, newest first. The line runs down the middle and
-   the chapters alternate sides: a card listing what happened on one side, its period across the line. */
+/* About popup: education and certifications, folded away under a heading that opens on a click */
+.about-more {
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.about-more summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  list-style: none;
+  cursor: pointer;
+}
+
+.about-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.about-more summary::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin-right: 4px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 0.15s;
+}
+
+.about-more[open] summary::after {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+.about-more-group {
+  padding: 0 18px 16px;
+}
+
+.about-more-group h3 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.edu-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.edu-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2px 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.edu-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.edu-org {
+  grid-column: 1;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.edu-dates {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+/* About popup: a vertical timeline of chapters of work, oldest first. The line runs down the
+   middle and the chapters alternate sides: a card of roles on one side, its period across the line. */
 .modal-mid {
   max-width: 920px;
 }
@@ -3878,7 +3966,7 @@ ul.modal-chips li + li {
   }
 }
 
-/* the period, large, with the chapter's name under it */
+/* the period, large, with the chapter's name and a line about it */
 .timeline-when {
   padding-top: 8px;
 }
@@ -3911,39 +3999,28 @@ ul.modal-chips li + li {
   font-size: 14.5px;
   line-height: 1.6;
   color: var(--ink-2);
-  /* even line lengths, so the ragged edge is tidy whichever side the text is set against */
   text-wrap: balance;
 }
 
-/* on the left of the line the block hugs the line, so its text stays close to its dot */
 .timeline > li.is-right .timeline-summary {
   margin-left: auto;
 }
 
-/* the card: everything from that chapter, one entry under another */
-.timeline-card {
+/* the card: that chapter's roles, one under another */
+.modal-section ul.timeline-card {
+  list-style: none;
+  margin: 0;
+  padding: 6px 22px;
   text-align: left;
   background: color-mix(in srgb, var(--c) 6%, var(--surface));
   border: 1px solid color-mix(in srgb, var(--c) 24%, var(--line));
   border-top: 3px solid var(--c);
   border-radius: 12px;
-  overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .timeline > li:hover .timeline-card {
   box-shadow: var(--shadow);
-}
-
-.modal-section .timeline-card ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* (the longer selector is needed to beat the reset just above) */
-.modal-section .timeline-card ul.timeline-roles {
-  padding: 6px 22px;
 }
 
 .modal-section .timeline-roles li {
@@ -3957,44 +4034,6 @@ ul.modal-chips li + li {
 
 .timeline-card span {
   display: block;
-}
-
-/* certificates earned in that chapter: a compact strip along the bottom of the card */
-.timeline-certs {
-  padding: 16px 22px 18px;
-  background: color-mix(in srgb, var(--c) 11%, var(--surface));
-  border-top: 1px dashed color-mix(in srgb, var(--c) 40%, var(--line));
-}
-
-.timeline-certs-label {
-  margin-bottom: 10px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--c) 78%, var(--ink));
-}
-
-.modal-section .timeline-certs li {
-  margin: 0;
-}
-
-.modal-section .timeline-certs li + li {
-  margin-top: 12px;
-}
-
-.timeline-cert-name {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--ink);
-}
-
-.timeline-cert-meta {
-  margin-top: 1px;
-  font-size: 12.5px;
-  line-height: 1.4;
-  color: var(--muted);
 }
 
 .timeline-role {
@@ -4055,6 +4094,13 @@ ul.modal-chips li + li {
 
 /* On a phone there is no room for two sides: the line moves to the left and every chapter sits right of it. */
 @media (max-width: 640px) {
+  .edu-list li {
+    grid-template-columns: 1fr;
+  }
+  .edu-dates {
+    grid-column: 1;
+    grid-row: auto;
+  }
   .timeline::before {
     left: 9px;
   }
@@ -4077,16 +4123,15 @@ ul.modal-chips li + li {
     grid-column: 2;
     text-align: left;
   }
+  .timeline > li.is-right .timeline-summary {
+    margin-left: 0;
+  }
   .timeline-when {
     padding: 0 0 8px;
   }
   .timeline-period {
     font-size: 20px;
   }
-}
-
-.about-path {
-  margin-top: 32px;
 }
 
 .about-facts {

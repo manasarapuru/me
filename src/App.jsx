@@ -438,10 +438,6 @@ export default function App() {
   const [modal, setModal] = useState(null);
   const closeModal = useCallback(() => setModal(null), []);
   const openAbout = () => setModal({ type: 'about' });
-  const openContact = () => {
-    setModal(null);
-    window.location.hash = '/contact';
-  };
   const openSkill = (id) => setModal({ type: 'skill', id });
   const openProject = (id) => setModal({ type: 'project', id });
 
@@ -499,7 +495,7 @@ export default function App() {
       </footer>
 
       {modal?.type === 'about' && (
-        <AboutModal onClose={closeModal} onContact={openContact} />
+        <AboutModal onClose={closeModal} />
       )}
 
       {modal?.type === 'skill' && (

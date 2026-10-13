@@ -14,87 +14,20 @@ export const profile = {
     'Examining where systems and their audiences fall out of sync.',
     'Developing solutions that make complex interactions more intuitive, accessible, and effective.',
   ],
-  // The About popup's timeline, newest first, as chapters. Things that ran at the same time share a
-  // chapter and are listed together on its card, with any certificates (`certs`) earned then beneath.
-  // `current` marks the chapter still under way; `summary` is an optional line under the chapter's name.
+  // The About popup's timeline, oldest first. Most entries are chapters of work: things that ran at
+  // the same time share a chapter and are listed together on its card. `current` marks the chapter
+  // still under way; `summary` is an optional line under the chapter's name.
+  // Within a chapter's `roles`, an entry with a `mark` is one of the smaller things that happened
+  // along the way (a degree, a certificate, a membership). It shows as a small dot between the
+  // roles, at the point it happened, and opens to show its details.
   timeline: [
     {
-      period: '2026',
-      label: 'Solidifying an interdisciplinary skill set',
-      summary: 'Seeking out work and coursework that connect biology, design and technology.',
-      color: '#0E7490',
-      current: true,
-      certs: [
-        { name: 'Artificial Intelligence in Pharma and Biotech', issuer: 'MIT Sloan School of Management', dates: 'Aug 2026' },
-        { name: 'AWS Cloud Practitioner', issuer: 'Amazon Web Services', dates: 'Expected Oct 2026' },
-        { name: 'Cancer Biology Specialization', issuer: 'Coursera', dates: 'Jul 2026' },
-        { name: 'IBM AI Developer', issuer: 'Coursera', dates: 'Jan 2026' },
-      ],
-      roles: [
-        {
-          role: 'UX Critic & Interface Designer Volunteer',
-          org: 'California Academy of Sciences',
-          detail: 'Scientific Computing Department',
-          dates: 'Aug 2026 – Present',
-        },
-        {
-          role: 'Member, User Experience Working Group',
-          org: 'US Research Software Engineering Association',
-          dates: 'Aug 2026 – Present',
-        },
-        {
-          role: 'Applied learning projects',
-          org: 'UCSC Genome Browser Reimagined · AI-Powered Poster Companion',
-          detail: 'Putting what I’m learning into practice on real scientific tools.',
-          dates: 'Spring 2026',
-        },
-      ],
-    },
-    {
-      period: '2024 – 2025',
-      label: 'Industry',
-      summary: 'Building tools that put bioinformatics capability in the hands of the teams who needed it.',
-      color: '#1D4ED8',
-      certs: [{ name: 'IBM Full Stack Software Developer Specialization', issuer: 'Coursera', dates: 'Apr 2024' }],
-      roles: [
-        {
-          role: 'Bioinformatics Scientist',
-          org: 'Thermo Fisher Scientific',
-          detail: 'qPCR/dPCR TaqMan Assays',
-          dates: 'Apr 2024 – Nov 2025',
-        },
-      ],
-    },
-    {
-      period: '2021 – 2023',
-      label: 'Graduate school & research',
-      summary: 'Where I first built an interface for researchers, and saw how much the design of a tool decides whether it gets used.',
-      color: '#6D28D9',
-      roles: [
-        {
-          role: 'Bioinformatics Specialist',
-          org: 'Massachusetts General Hospital',
-          detail: 'Huntington’s Transcriptomics/Genomics',
-          dates: 'Mar 2021 – Aug 2023',
-        },
-        {
-          role: 'M.S. Bioinformatics',
-          org: 'Boston University',
-          dates: 'Sept 2021 – May 2023',
-        },
-      ],
-    },
-    {
       period: '2016 – 2020',
-      label: 'Undergraduate',
-      summary: 'Grounded in microbiology and chemistry, then drawn into bioinformatics through undergraduate research and a national lab internship.',
+      label: 'Analyzing biological data',
+      summary: 'Investigating scientific questions, and learning how to apply biology.',
       color: '#BE185D',
       roles: [
-        {
-          role: 'B.S. Microbiology, Chemistry Minor',
-          org: 'San Jose State University',
-          dates: 'Aug 2016 – Dec 2020',
-        },
+        { mark: 'Education', name: 'B.S. Microbiology, Chemistry Minor', org: 'San Jose State University', dates: 'Aug 2016 – Dec 2020' },
         {
           role: 'Undergraduate Bioinformatics Research Student',
           org: 'San Jose State University',
@@ -109,10 +42,60 @@ export const profile = {
         },
       ],
     },
+    {
+      period: '2021 – 2023',
+      label: 'Building pipelines',
+      summary: 'Command-line pipelines that carry out an analysis. Applying biology while learning development and how to connect workflows.',
+      color: '#6D28D9',
+      roles: [
+        {
+          role: 'Bioinformatics Specialist',
+          org: 'Massachusetts General Hospital',
+          detail: 'Huntington’s Transcriptomics/Genomics',
+          dates: 'Mar 2021 – Aug 2023',
+        },
+        { mark: 'Education', name: 'M.S. Bioinformatics', org: 'Boston University', dates: 'Sept 2021 – May 2023' },
+      ],
+    },
+    {
+      period: '2023 – Present',
+      label: 'Building tools for people',
+      summary: 'Owning the design and development of tools with interfaces, flows and audiences to consider. Everything before, plus thinking from the user’s perspective.',
+      color: '#1D4ED8',
+      current: true,
+      roles: [
+        {
+          role: 'In-Lab Alzheimer’s Research Data Explorer',
+          org: 'Boston University',
+          detail: 'Designed and built the front end of a platform for exploring research data.',
+          dates: 'Feb 2023 – May 2023',
+        },
+        { mark: 'Certificate', name: 'IBM Full Stack Software Developer Specialization', org: 'Coursera', dates: 'Apr 2024' },
+        {
+          role: 'Bioinformatics Scientist',
+          org: 'Thermo Fisher Scientific',
+          detail: 'qPCR/dPCR TaqMan Assays',
+          dates: 'Apr 2024 – Nov 2025',
+        },
+        { mark: 'Certificate', name: 'IBM AI Developer', org: 'Coursera', dates: 'Jan 2026' },
+        { mark: 'Certificate', name: 'Cancer Biology Specialization', org: 'Coursera', dates: 'Jul 2026' },
+        { mark: 'Certificate', name: 'Artificial Intelligence in Pharma and Biotech', org: 'MIT Sloan School of Management', dates: 'Aug 2026' },
+        { mark: 'Membership', name: 'User Experience Working Group', org: 'US Research Software Engineering Association', dates: 'Aug 2026 – Present' },
+        {
+          role: 'UX Critic & Interface Designer Volunteer',
+          org: 'California Academy of Sciences',
+          detail: 'Scientific Computing Department',
+          dates: 'Aug 2026 – Present',
+        },
+        { mark: 'Certificate', name: 'AWS Cloud Practitioner', org: 'Amazon Web Services', dates: 'Expected Oct 2026' },
+      ],
+    },
   ],
-  // The About popup's introduction, above the timeline.
-  bio:
-    'I started in microbiology, moved into bioinformatics, and kept noticing the same thing: the science was sound, but the tools around it were hard for people to use. I now work where biology, software and design meet, building scientific software around how its users think.',
+  // The About popup's introduction, above the timeline: one entry per paragraph.
+  bio: [
+    'My experience developing scientific software spans academia, industry, and museum environments, each with its own goals, workflows and audiences. Through these experiences, I’ve developed an understanding of how a tool’s purpose, the environment it’s built for and the people it serves influence how software is approached and developed.',
+    'This perspective shapes how I think about translating scientific and technical capabilities into tools that are practical, accessible and fit for their intended use. I’m interested in bringing biology, software and design together to create more meaningful ways for people to interact with science.',
+  ],
   facts: [
     { label: 'Focus', value: 'Bioinformatics tools, AI-assisted workflows, scientist-facing UX' },
     { label: 'Experience', value: 'Molecular diagnostics, neurodegenerative disease, microbiology' },

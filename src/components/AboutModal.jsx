@@ -2,7 +2,15 @@ import { profile } from '../data.js';
 import photo from '../docs/intro_prof.jpg';
 import Modal from './Modal.jsx';
 
-export default function AboutModal({ onClose, onContact }) {
+// The degrees, certificates and memberships recorded along the timeline, gathered by kind.
+const marks = profile.timeline.flatMap((chapter) => chapter.roles.filter((entry) => entry.mark));
+const CREDENTIALS = [
+  ['Education', marks.filter((entry) => entry.mark === 'Education')],
+  ['Certifications', marks.filter((entry) => entry.mark === 'Certificate')],
+  ['Memberships', marks.filter((entry) => entry.mark === 'Membership')],
+].filter(([, items]) => items.length);
+
+export default function AboutModal({ onClose }) {
   return (
     <Modal labelledBy="about-modal-title" onClose={onClose} className="modal-mid">
       <div className="about-head">
@@ -16,7 +24,28 @@ export default function AboutModal({ onClose, onContact }) {
         </div>
       </div>
 
-      <p className="about-bio">{profile.bio}</p>
+      {profile.bio.map((paragraph) => (
+        <p key={paragraph} className="about-bio">{paragraph}</p>
+      ))}
+
+      {/* tucked away until asked for, so the timeline below stays about the work */}
+      <details className="about-more">
+        <summary>Education and certifications</summary>
+        {CREDENTIALS.map(([heading, items]) => (
+          <div key={heading} className="about-more-group">
+            <h3>{heading}</h3>
+            <ul className="edu-list">
+              {items.map((item) => (
+                <li key={item.name}>
+                  <span className="edu-name">{item.name}</span>
+                  <span className="edu-org">{item.org}</span>
+                  <span className="edu-dates">{item.dates}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </details>
 
       <div className="modal-section about-path">
         <h3>My path</h3>
@@ -34,42 +63,21 @@ export default function AboutModal({ onClose, onContact }) {
                 {chapter.summary && <span className="timeline-summary">{chapter.summary}</span>}
               </div>
               <span className="timeline-dot" aria-hidden="true" />
-              <div className="timeline-card">
-                <ul className="timeline-roles">
-                  {chapter.roles.map((r) => (
-                    <li key={`${r.role}-${r.org}`}>
-                      <span className="timeline-role">{r.role}</span>
-                      <span className="timeline-org">{r.org}</span>
-                      {r.detail && <span className="timeline-detail">{r.detail}</span>}
-                      <span className="timeline-dates">{r.dates}</span>
+              <ul className="timeline-card timeline-roles">
+                {chapter.roles
+                  .filter((entry) => !entry.mark)
+                  .map((entry) => (
+                    <li key={`${entry.role}-${entry.org}`}>
+                      <span className="timeline-role">{entry.role}</span>
+                      <span className="timeline-org">{entry.org}</span>
+                      {entry.detail && <span className="timeline-detail">{entry.detail}</span>}
+                      <span className="timeline-dates">{entry.dates}</span>
                     </li>
                   ))}
-                </ul>
-                {chapter.certs && (
-                  <div className="timeline-certs">
-                    <span className="timeline-certs-label">
-                      {chapter.certs.length === 1 ? 'Certificate' : 'Certificates'}
-                    </span>
-                    <ul>
-                      {chapter.certs.map((c) => (
-                        <li key={c.name}>
-                          <span className="timeline-cert-name">{c.name}</span>
-                          <span className="timeline-cert-meta">
-                            {c.issuer} · {c.dates}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              </ul>
             </li>
           ))}
         </ol>
-      </div>
-
-      <div className="about-actions">
-        <button type="button" className="btn btn-dark" onClick={onContact}>Get in touch</button>
       </div>
     </Modal>
   );
