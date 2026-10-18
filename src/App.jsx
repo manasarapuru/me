@@ -235,6 +235,13 @@ function Explorer({ aboutOpen, onOpenAbout, onOpenProject }) {
       const chosen = current[facetId];
       return { ...current, [facetId]: chosen.includes(id) ? chosen.filter((x) => x !== id) : [...chosen, id] };
     });
+  // A click on the orbit makes that theme the only one chosen; clicking it again when it is the only
+  // one clears the theme filter. (The Theme menu still lets several be ticked at once.)
+  const pickTheme = (id) =>
+    setFilters((current) => {
+      const only = current.theme.length === 1 && current.theme[0] === id;
+      return { ...current, theme: only ? [] : [id] };
+    });
   const clearFilters = () => setFilters(NO_FILTERS);
   const applied = FACETS.flatMap((f) =>
     filters[f.id].map((id) => ({ facet: f.id, ...f.options.find((option) => option.id === id) }))
@@ -276,7 +283,7 @@ function Explorer({ aboutOpen, onOpenAbout, onOpenProject }) {
               selectedIds={filters.theme}
               meActive={aboutOpen}
               onSelectMe={onOpenAbout}
-              onSelect={(id) => toggleFilter('theme', id)}
+              onSelect={pickTheme}
               onHover={hoverTheme}
             />
             {tip && (

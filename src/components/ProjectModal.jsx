@@ -203,27 +203,46 @@ function Section({ section }) {
 export default function ProjectModal({ project, onClose }) {
   const tabs = toTabs(project.details ?? []);
   const theme = themeTag(project);
+  const status = statusById[project.status];
   const [active, setActive] = useState(0);
 
   return (
     <Modal labelledBy="project-modal-title" onClose={onClose} className={tabs.length > 1 ? 'modal-wide' : 'modal-roomy'}>
       <p className="eyebrow eyebrow-skill" style={{ '--c': theme.color }}>
-        <span className="chip-dot" /> {theme.label} · {project.kind}
-        {statusById[project.status] && ` · ${statusById[project.status].label}`}
-        {project.place && ` · ${project.place}`}
-        {project.year && ` · ${project.year}`}
+        <span className="chip-dot" /> {theme.label}
       </p>
       <h2 id="project-modal-title" className="modal-title">{project.title}</h2>
       <p className="modal-tagline">{project.tagline}</p>
+
+      {/* the facts about the work, each under a small label */}
+      <dl className="case-facts">
+        {[
+          ['Type', project.kind],
+          ['Status', status && <span className="case-status" style={{ '--c': status.color }}>{status.label}</span>],
+          ['Where', project.place],
+          ['Year', project.year],
+        ]
+          .filter(([, value]) => value)
+          .map(([label, value]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>{value}</dd>
+            </div>
+          ))}
+        {/* the skills get a full-width row of their own beneath */}
+        {project.skills.length > 0 && (
+          <div className="case-skills">
+            <dt>Skills</dt>
+            <dd className="chip-row">
+              {project.skills.map((name) => (
+                <span key={name} className="chip">{name}</span>
+              ))}
+            </dd>
+          </div>
+        )}
+      </dl>
       {project.meta && <p className="modal-meta">{project.meta}</p>}
 
-      {project.skills.length > 0 && (
-        <div className="chip-row">
-          {project.skills.map((name) => (
-            <span key={name} className="chip">{name}</span>
-          ))}
-        </div>
-      )}
 
       {project.stat && (
         <div className="result-stat">

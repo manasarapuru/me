@@ -306,14 +306,10 @@ const allProjects = [
     stat: { from: 'Up to 2 days', to: 'Under 1 minute', label: 'Turnaround for a data request' },
     details: [
       {
-        heading: 'Product',
-        text: 'A self-service application that enables a customer-facing team to access the data they need without relying on bioinformatics to retrieve it.',
-      },
-      {
         heading: 'Challenge',
         text: [
-          'When specialized expertise is separated from the people who need it, cross-functional dependencies can turn capabilities into support requests.',
-          'In this case, the customer-facing team knew what data they needed but depended on bioinformatics to generate it. Even straightforward requests could take days to complete, creating a one-directional dependency between the teams.',
+          'When teams lack direct access to the data they need, they must rely on specialists to retrieve it. This extra step can create delays in downstream work.',
+          'In this case, internal teams depended on bioinformatics specialists to access the data they needed, with even straightforward requests taking up to two days to fulfill.',
         ],
         // plays out in the popup as an animated chat
         chat: {
@@ -332,17 +328,13 @@ const allProjects = [
         },
       },
       {
-        heading: 'Intervention',
-        text: [
-          'I turned a bioinformatics request into a self-service workflow, bringing the technical capability closer to the people who needed it.',
-          'Rather than requiring the customer-facing team to understand how the underlying workflow worked, I translated that complexity into an interface built around how they already thought about their requests.',
-        ],
+        heading: 'Product',
+        text: 'I developed a self-service application that made bioinformatics analysis more accessible to the people who needed its outputs. Rather than requiring internal teams to depend on bioinformatics specialists, I translated the underlying workflow into an interface that allowed them to access analytical outputs independently.',
       },
       {
         heading: 'What it revealed',
         text: [
-          'Not every cross-functional dependency needs another handoff. Sometimes the better intervention is to make specialized capabilities accessible enough that teams can use them directly.',
-          'The project also revealed that reducing a dependency does not necessarily mean removing the expertise behind it. The bioinformatics knowledge remained embedded in the workflow while the need for bioinformatics to manually fulfill each request was reduced.',
+          'The result was a reduction in turnaround time from up to two days to under a minute.',
         ],
       },
       { group: 'How I approached it' },
@@ -474,7 +466,7 @@ const allProjects = [
           },
         ],
       },
-      { group: 'Outcome' },
+      { group: 'Feedback' },
       {
         heading: 'Stakeholder feedback',
         text: 'Feedback was gathered across the groups involved in or affected by the project.',
@@ -485,13 +477,6 @@ const allProjects = [
           { label: 'PM, R&D & stakeholders', value: 'Met business requirements, added operational value, and had potential beyond the original scope' },
         ],
         after: 'The broader stakeholder feedback also surfaced potential use for other internal workflows, suggesting that the intervention could function as more than a solution to a single request.',
-      },
-      {
-        heading: 'Result',
-        text: [
-          'The application reduced the turnaround for a data request from up to two days to under one minute, while enabling the customer-facing team to access the data independently.',
-          'The result was not simply a faster workflow. It shifted where the capability lived: from a request fulfilled by a specialized team to a capability that the requesting team could access directly.',
-        ],
       },
     ],
   },
@@ -507,15 +492,10 @@ const allProjects = [
     skills: ['RAG', 'LLMs', 'Python', 'SQL', 'FastAPI', 'React.js', 'User feedback', 'Flow diagram'],
     details: [
       {
-        heading: 'Product',
-        text: 'A context-aware RAG chatbot that generates metadata and enables users to query and understand datasets through conversations tailored to their use case.',
-      },
-      {
         heading: 'Challenge',
         text: [
-          'Raw datasets alone are often difficult for users to interpret or act on. Without proper context, descriptions, or structured organization, the data’s value remains inaccessible.',
-          'Users struggled to make sense of the datasets because no platform organized the information in a way that was understandable and actionable. The lack of metadata, structure, and exploration tools left the data underutilized.',
-          'That left an opportunity to design a system that does more than store data: one that presents it in a way that aligns with user needs, making datasets more comprehensible, navigable, and actionable.',
+          'When related information is spread across datasets, users need a way to connect it to understand the bigger picture.',
+          'Without a platform to bring different types of data together, users struggled to explore relationships and draw meaningful insights from the information available.',
         ],
         // shown in the popup as a looping scene; the windows are left untitled (the names only tell them apart here)
         files: {
@@ -542,11 +522,8 @@ const allProjects = [
         },
       },
       {
-        heading: 'Intervention',
-        text: [
-          'I used a RAG-based conversational interface to bring contextual information closer to the data, generating metadata and allowing users to ask questions in terms of their own use case.',
-          'Rather than requiring users to navigate raw datasets or locate documentation separately, the system connected the underlying information with contextual explanations through conversation.',
-        ],
+        heading: 'Product',
+        text: 'I developed a RAG-based exploratory interface that combines conversational querying with other ways to navigate and investigate data. The system generates metadata and helps users connect related information across datasets, with interactions tailored to their specific use cases.',
         // plays out in the popup as a simulated conversation with the chatbot; answers are placeholders
         chat: {
           header: 'bot',
@@ -585,10 +562,10 @@ const allProjects = [
         },
       },
       {
-        heading: 'What it revealed',
+        heading: 'What testing showed',
         text: [
-          'Making data accessible is not only about making it available. The context surrounding data can be just as important as the data itself.',
-          'When context, metadata, and interpretation are separated from the dataset, users have to reconstruct that context themselves. Embedding it into the experience can make existing data easier to understand, navigate, and act on.',
+          'The approach created a way for users to move beyond viewing datasets in isolation and explore how different sources of information relate.',
+          'By bringing contextual information and exploratory interactions into one place, the system reduced the need to piece together information from separate datasets and documentation. Combining metadata generation, conversational querying, and data exploration supported multiple ways for users to build context and investigate questions relevant to their needs.',
         ],
       },
       { group: 'How I approached it' },
@@ -638,7 +615,7 @@ const allProjects = [
           },
         ],
       },
-      { group: 'Outcome' },
+      { group: 'Feedback' },
       {
         heading: 'Result',
         text: 'The chatbot improved data comprehension and usability by bringing contextual information into the user’s interaction with the dataset. It reduced the need for users to manually piece together metadata and documentation and created a more accessible path from raw data to understanding and downstream use.',

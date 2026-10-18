@@ -1836,6 +1836,73 @@ button.nav-link {
   color: var(--muted);
 }
 
+/* the case study's facts (type, status, where, year) in a row of labelled cells under the title */
+.case-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 0;
+  margin: 18px 0 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.case-facts > div {
+  padding: 0 22px;
+  border-left: 1px solid var(--line);
+}
+
+.case-facts > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.case-facts dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.case-facts dd {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.case-status {
+  display: inline-block;
+  padding: 1px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 10%, transparent);
+  border-radius: 999px;
+}
+
+.case-facts > div.case-skills {
+  flex-basis: 100%;
+  padding: 12px 0 0;
+  border-left: 0;
+  border-top: 1px solid var(--line);
+}
+
+.case-facts .case-skills dd {
+  margin-top: 8px;
+}
+
+@media (max-width: 640px) {
+  .case-facts > div {
+    padding: 0 14px;
+  }
+  .case-facts > div.case-skills {
+    padding: 12px 0 0;
+  }
+}
+
 .modal-meta {
   margin-top: 8px;
   font-size: 13px;
