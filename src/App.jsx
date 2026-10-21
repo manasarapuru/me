@@ -271,9 +271,9 @@ function Explorer({ aboutOpen, onOpenAbout, onOpenProject }) {
         <div className="explorer-card">
           <div className="explorer-main">
             <div className="explorer-intro">
-              <h2 className="explorer-title">Four sources of confusion.</h2>
+              <h2 className="explorer-title">Four sources of friction.</h2>
               <p className="explorer-text">
-                Across my work I’ve observed four places where the translation gap opens up. Each one is paired
+                Across my work I’ve observed four sources of friction that lead to the translation gap. Each one is paired
                 with the work that addresses it.
               </p>
             </div>

@@ -121,7 +121,7 @@ const allStory = [
     caption: 'Here’s a gap I keep seeing.',
     title: 'Lost in translation.',
     body: [
-      'Scientific software often has what its users need, but not in a form that matches how they think. The capability exists and still stays out of reach.',
+      'Scientific software often has what its users need, but not in a form that matches how they think. The capability exists, yet accessibility can still be a barrier.',
     ],
   },
   {
@@ -356,13 +356,13 @@ const allProjects = [
       {
         heading: 'Hybrid workflow',
         text: [
-          'I owned every stage of the work, from understanding stakeholders to evaluating the outcome. Rather than treating the user’s mental model, the science and data, and the technical implementation as separate stages, I moved between them throughout.',
-          'That meant understanding what users were trying to accomplish, identifying the bioinformatics workflow behind it, deciding what to expose or abstract, and shaping that capability into a workflow users could operate themselves.',
+          'I led the work end to end, from stakeholder discovery through outcome evaluation. User mental models, scientific and data requirements, and technical implementation were treated not as discrete stages but as interconnected considerations that informed one another throughout the process.',
+          'This required translating user needs into the underlying bioinformatics workflows, determining which complexities to expose or abstract, and shaping the resulting capabilities into an intuitive, self-service experience that users could navigate independently.',
         ],
         stages: [
           {
             title: 'Understand stakeholders',
-            text: 'I interviewed people on both sides of the request and mapped who owned, used and supported the workflow. Two personas captured how differently each team experienced the same handoff.',
+            text: 'Interviews with people on both sides of the request mapped who owned, used and supported the workflow. Two personas captured how differently each team experienced the same handoff.',
             practices: [
               { name: 'Stakeholder interviews / conversations', discipline: 'UX / Product', helps: 'Who is affected, what they need, what constraints exist' },
               { name: 'Personas / user profiles', discipline: 'UX', helps: 'Different needs, goals, expertise, and mental models' },
@@ -383,7 +383,6 @@ const allProjects = [
                   'Waits 1–3 days for each request',
                   'Re-explains the context every time',
                   'Gets the wrong data when a request is misread',
-                  'Feels like a burden raising tickets',
                 ],
               },
               {
@@ -397,17 +396,15 @@ const allProjects = [
                   'Deliver results without ambiguity',
                 ],
                 pains: [
-                  'Spends 40% of their time on routine retrieval',
+                  'Loses time from higher-priority work',
                   'Reworks requests when requirements are unclear',
-                  'Loses deep-analysis time to interruptions',
-                  'Has no single source of truth for requests',
                 ],
               },
             ],
           },
           {
             title: 'Understand the existing system',
-            text: 'I charted the current request workflow to see where decisions and handoffs occurred, then traced how the data moved through the bioinformatics pipeline. Observing the work in practice surfaced the transformations, assumptions and validation steps the analysis depended on.',
+            text: 'Charting the original request workflow showed where decisions and handoffs occurred, and tracing the data through the bioinformatics pipeline showed how it moved. Observing the work in practice surfaced the transformations, assumptions and validation steps the analysis depended on.',
             practices: [
               { name: 'Current-state workflow / flowchart', discipline: 'UX / Engineering', helps: 'Where information, decisions, and handoffs occur' },
               { name: 'Data-flow diagram', discipline: 'Engineering / Bioinformatics', helps: 'How data moves technically through the system' },
@@ -417,7 +414,7 @@ const allProjects = [
           },
           {
             title: 'Define the intervention',
-            text: 'I framed the problem around what requesters were ultimately trying to accomplish, gathered what the system had to do, and prioritized what belonged in the first version.',
+            text: 'The problem was framed around what requesters were ultimately trying to accomplish, then turned into requirements and prioritized into a first version.',
             practices: [
               { name: 'Problem framing', discipline: 'Product / UX', helps: 'What problem are you actually solving?' },
               { name: 'Jobs-to-be-done / user goals', discipline: 'Product / UX', helps: 'What is the user ultimately trying to accomplish?' },
@@ -427,7 +424,7 @@ const allProjects = [
           },
           {
             title: 'Translate into experience',
-            text: 'I designed the path a requester would take and prototyped it before building. Technical options were expressed in the team’s own language, and complexity stayed hidden until it was needed.',
+            text: 'The path a requester would take was designed and prototyped before any building began. Technical options were expressed in the team’s own language, and complexity stayed hidden until it was needed.',
             practices: [
               { name: 'User flow', discipline: 'UX', helps: 'What path should the user take?' },
               { name: 'Information architecture', discipline: 'UX', helps: 'How should functionality be organized?' },
@@ -438,7 +435,7 @@ const allProjects = [
           },
           {
             title: 'Build',
-            text: 'I built the workflow in modular pieces, kept the technical complexity behind the interface, and validated that it produced the correct results.',
+            text: 'The workflow was built in modular pieces, with the technical complexity kept behind the interface and its results validated for correctness.',
             practices: [
               { name: 'Modular development', discipline: 'Engineering', helps: 'How can the workflow be implemented reliably?' },
               { name: 'API/function abstraction', discipline: 'Engineering', helps: 'What technical complexity should sit behind the interface?' },
@@ -447,7 +444,7 @@ const allProjects = [
           },
           {
             title: 'Iterate',
-            text: 'I ran demonstrations and usability sessions with users. Technical and stakeholder reviews confirmed the tool was scientifically sound and met the broader organizational need.',
+            text: 'Demonstrations and usability sessions with users shaped each revision. Technical and stakeholder reviews confirmed the tool was scientifically sound and met the broader organizational need.',
             practices: [
               { name: 'Usability testing', discipline: 'UX', helps: 'Can people actually use it?' },
               { name: 'Demonstrations / feedback sessions', discipline: 'Product / UX', helps: 'Does the workflow match expectations?' },
@@ -457,7 +454,7 @@ const allProjects = [
           },
           {
             title: 'Evaluate',
-            text: 'I compared the workflow before and after the tool, measuring the change in turnaround and whether the team adopted it.',
+            text: 'A before-and-after comparison of the workflow measured the change in turnaround and whether the team adopted the tool.',
             practices: [
               { name: 'Outcome measurement', discipline: 'Product / Science', helps: 'Did the intervention actually improve the workflow?' },
               { name: 'Adoption / usage', discipline: 'Product', helps: 'Did people actually use it?' },
@@ -675,7 +672,6 @@ const allProjects = [
           { label: 'Leading-edge analysis', value: 'Which genes are contributing most strongly to the enrichment of a pathway?' },
         ],
         after: [
-          'Because different team members were responsible for different parts of the analysis, the resulting data also differed in structure, inputs, outputs, and appropriate visualizations.',
           'From a front-end perspective, this created a challenge: **how could these different analyses be brought together into one interface without making users understand the technical structure behind them?** The intended users included lab members without programming backgrounds who needed to explore the results independently.',
         ],
       },
