@@ -20,6 +20,7 @@ import ProjectModal from './components/ProjectModal.jsx';
 import AboutModal from './components/AboutModal.jsx';
 import SkillModal from './components/SkillModal.jsx';
 import ContactPage from './components/ContactPage.jsx';
+import Skills from './components/Skills.jsx';
 import ResumePage from './components/ResumePage.jsx';
 import SocialLinks from './components/SocialLinks.jsx';
 import SocialIcons from './components/SocialIcons.jsx';
@@ -39,6 +40,7 @@ function Header({ theme, onToggleTheme, onAbout }) {
         <nav className={`header-nav ${menuOpen ? 'is-open' : ''}`}>
           <div id="nav-links" className="nav-links">
             <a href="#story" className="nav-link" onClick={closeMenu}>Approach</a>
+            <a href="#skills" className="nav-link" onClick={closeMenu}>Skills</a>
             <a href="#explore" className="nav-link" onClick={closeMenu}>Work</a>
             <button
               type="button"
@@ -268,7 +270,11 @@ function Explorer({ aboutOpen, onOpenAbout, onOpenProject }) {
   return (
     <section className="explorer" id="explore">
       <div className="container">
-        <div className="explorer-card">
+        <header className="section-head reveal">
+          <h2 className="section-title is-accent">Projects</h2>
+          <p className="section-sub">Four places the gap shows up, and the projects that address each one.</p>
+        </header>
+        <div className="explorer-card reveal">
           <div className="explorer-main">
             <div className="explorer-intro">
               <h2 className="explorer-title">Four sources of friction.</h2>
@@ -458,6 +464,28 @@ export default function App() {
   const introLeave = useCallback(() => setIntro('leaving'), []);
   const introDone = useCallback(() => setIntro('done'), []);
 
+  // Sections slide up into place as they are scrolled to. Elements marked .reveal start hidden only
+  // once this has run (it adds .has-reveal to the page), so without it everything simply shows.
+  // It waits for the intro to finish, so nothing is revealed behind it before anyone can see.
+  useEffect(() => {
+    if (page === 'home' && intro !== 'done') return undefined;
+    const items = document.querySelectorAll('.reveal:not(.is-visible)');
+    if (!('IntersectionObserver' in window) || !items.length) return undefined;
+    document.documentElement.classList.add('has-reveal');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [page, intro]);
+
   return (
     <>
       {page === 'home' && intro !== 'done' && (
@@ -486,6 +514,7 @@ export default function App() {
             figureVisible={intro === 'done'}
           />
           <Story />
+          <Skills />
           <Explorer
             aboutOpen={modal?.type === 'about'}
             onOpenAbout={openAbout}

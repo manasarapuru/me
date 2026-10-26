@@ -109,14 +109,14 @@ export const socials = [
   { id: 'tiktok', label: 'TikTok', handle: '@taughtillustrated', url: 'https://www.tiktok.com/@taughtillustrated' },
 ];
 
-// The story carousel between the hero and the explorer: the problem → why it's hard → how I work → beyond software.
+// The story carousel between the hero and the explorer: gap → barrier → my contribution → beyond software.
 // `pose` sets what the guide avatar holds: question | scale | bulb | orbit | wave.
 // `caption` is what the guide "says" while that slide is showing.
 // Slides marked `hidden: true` are kept here but left off the site.
 const allStory = [
   {
     id: 'problem',
-    label: 'The problem',
+    label: 'Gap',
     pose: 'question',
     caption: 'Here’s a gap I keep seeing.',
     title: 'Lost in translation.',
@@ -126,7 +126,7 @@ const allStory = [
   },
   {
     id: 'challenge',
-    label: 'Why it’s hard',
+    label: 'Barrier',
     pose: 'scale',
     caption: 'Closing it isn’t simple.',
     title: 'A careful balance.',
@@ -136,7 +136,7 @@ const allStory = [
   },
   {
     id: 'approach',
-    label: 'How I work',
+    label: 'My Contribution',
     pose: 'orbit',
     caption: 'So here’s how I work.',
     title: 'My breadth allows me to weigh different principles and adapt my judgment.',
@@ -190,6 +190,70 @@ export const skillGroups = [
   },
   { label: 'Science', skills: ['Bioinformatics', 'Neurodegenerative disease research'] },
   { label: 'Communication', skills: ['Storytelling', 'Podcast production', 'Product management', 'Social media', 'Procreate', 'Procreate Dreams'] },
+];
+
+// The Skills section on the main page, between the approach and the work. The skills are told as the
+// four steps of the work, each grouped by what that step draws on. Taken from the resume and the
+// case studies. `pose` and `caption` set what the avatar holds and says: magnifier | links | code | checklist.
+export const skillSteps = [
+  {
+    title: 'Understand',
+    pose: 'magnifier',
+    caption: 'Listen and learn.',
+    text: 'Listen and learn how clients want their information translated into a tool, to arrive at the best design.',
+    groups: [
+      {
+        label: 'Subject Matter Expertise',
+        items: ['Genomics', 'Transcriptomics', 'Bulk RNA-seq', 'Single-cell RNA-seq', 'NGS', 'CRISPR', 'qPCR/dPCR assay design'],
+      },
+      {
+        label: 'Product Design / UX',
+        items: ['Stakeholder interviews', 'Requirements gathering', 'Stakeholder collaboration', 'Personas', 'Workflow observation'],
+      },
+    ],
+  },
+  {
+    title: 'Plan',
+    pose: 'links',
+    caption: 'Choose the right resource for each function.',
+    text: 'Working out which data, tools and workflows fit each part of the problem.',
+    groups: [
+      {
+        label: 'Bioinformatics tools',
+        items: [
+          'DESeq2', 'Scanpy', 'Seurat', 'STAR', 'GATK', 'SAMtools', 'BEDTools', 'BLAST', 'FastQC', 'Trimmomatic', 'IGV',
+          'Ensembl', 'NCBI', 'dbSNP', 'COSMIC',
+        ],
+      },
+      { label: 'Design', items: ['Figma', 'User flows', 'User-centered design', 'Workflow design', 'Prototyping'] },
+    ],
+  },
+  {
+    title: 'Build',
+    pose: 'code',
+    caption: 'Build in accordance with their mental models.',
+    text: 'Build around the client’s mental models, presenting the depth through the most intuitive user flows and interactions.',
+    groups: [
+      { label: 'Coding', items: ['Python', 'R', 'Perl', 'SQL', 'JavaScript', 'Java', 'HTML', 'CSS', 'Git'] },
+      { label: 'Workflow managers', items: ['Snakemake', 'Bash'] },
+      { label: 'Infrastructure & HPC', items: ['Linux', 'SLURM', 'Docker', 'AWS', 'CI/CD'] },
+      { label: 'Data', items: ['pandas', 'NumPy', 'SciPy', 'Matplotlib', 'ggplot2'] },
+      { label: 'Frameworks', items: ['React', 'REST APIs', 'FastAPI', 'Flask', 'Streamlit'] },
+      { label: 'AI', items: ['LLM applications', 'RAG', 'AI agents', 'Prompt engineering', 'Claude Code'] },
+    ],
+  },
+  {
+    title: 'Evaluate',
+    pose: 'checklist',
+    caption: 'Did it actually align?',
+    text: 'Thinking it aligns isn’t the same as testing it. Test with clients, then iterate.',
+    groups: [
+      {
+        label: 'Product Design / UX',
+        items: ['Usability testing', 'Heuristic evaluation', 'Survey design', 'User feedback', 'Concept testing'],
+      },
+    ],
+  },
 ];
 
 // The broad skill areas, shown in the About popup; each opens a popup of its own.

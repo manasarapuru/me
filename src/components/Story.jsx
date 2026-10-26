@@ -3,7 +3,7 @@ import { story } from '../data.js';
 import Avatar from './Avatar.jsx';
 
 // Props the guide holds up, drawn in the avatar's 120x120 space just above the raised hand (≈105, 66).
-function GuideProps({ pose }) {
+export function GuideProps({ pose }) {
   const on = (name) => `guide-prop ${pose === name ? 'is-on' : ''}`;
   return (
     <svg className="guide-props" viewBox="0 0 120 120" aria-hidden="true">
@@ -112,11 +112,15 @@ export default function Story() {
       className="story"
       id="story"
       aria-roledescription="carousel"
-      aria-label="The problem and how I work"
+      aria-label="The gap, the barrier and my contribution"
     >
       <div className="container">
+        <header className="section-head reveal">
+          <h2 className="section-title is-accent">Problem</h2>
+          <p className="section-sub">Scientific software often holds what people need, in a form they can’t easily use.</p>
+        </header>
         <div
-          className="story-grid"
+          className="story-grid reveal"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onFocus={() => setPaused(true)}
