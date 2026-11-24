@@ -1,18 +1,14 @@
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   profile,
   themes,
-  statuses,
-  skillGroups,
   projects,
+  featuredProjects,
+  showStartHere,
   skillById,
-  themeById,
-  statusById,
   themesOf,
-  themeTag,
 } from './data.js';
 import { parseEmphasis } from './text.js';
-import Orbit from './components/Orbit.jsx';
 import HeroFigure from './components/HeroFigure.jsx';
 import IntroOverlay from './components/IntroOverlay.jsx';
 import Story from './components/Story.jsx';
@@ -20,7 +16,6 @@ import ProjectModal from './components/ProjectModal.jsx';
 import AboutModal from './components/AboutModal.jsx';
 import SkillModal from './components/SkillModal.jsx';
 import ContactPage from './components/ContactPage.jsx';
-import Skills from './components/Skills.jsx';
 import ResumePage from './components/ResumePage.jsx';
 import SocialLinks from './components/SocialLinks.jsx';
 import SocialIcons from './components/SocialIcons.jsx';
@@ -39,8 +34,6 @@ function Header({ theme, onToggleTheme, onAbout }) {
         </a>
         <nav className={`header-nav ${menuOpen ? 'is-open' : ''}`}>
           <div id="nav-links" className="nav-links">
-            <a href="#story" className="nav-link" onClick={closeMenu}>Approach</a>
-            <a href="#skills" className="nav-link" onClick={closeMenu}>Skills</a>
             <a href="#explore" className="nav-link" onClick={closeMenu}>Work</a>
             <button
               type="button"
@@ -105,20 +98,26 @@ function Hero({ figureRef, headlineRef, revealed, figureVisible }) {
             )}
           </h1>
 
-          {/* Hidden while the intro plays; the intro's disk glides onto this spot and this one takes over. */}
-          <HeroFigure figureRef={figureRef} className={figureVisible ? '' : 'is-hidden'} typingOnly />
+          <div className="hero-side">
+            {/* Hidden while the intro plays; the intro's disk glides onto this spot and this one takes over. */}
+            <HeroFigure figureRef={figureRef} className={figureVisible ? '' : 'is-hidden'} sceneOnly />
+            <SocialIcons ids={['linkedin']} className="hero-socials hero-copy" />
+          </div>
         </div>
 
         <div className="hero-sub hero-copy">
-          {/* sits on the divider line, under the figure */}
-          <SocialIcons ids={['linkedin', 'spotify', 'tiktok']} className="hero-socials" />
-          <div>
-            {profile.statement.slice(1).map((sentence) => (
-              <p key={sentence} className="hero-intro">{sentence}</p>
+          {profile.statement.slice(1).map((sentence) => (
+            <p key={sentence} className="hero-intro">
+              {parseEmphasis(sentence).map((piece, i) => (piece.strong ? <em key={i}>{piece.text}</em> : piece.text))}
+            </p>
+          ))}
+          <ul className="hero-tags">
+            {profile.heroTags.map((tag) => (
+              <li key={tag}>{tag}</li>
             ))}
-          </div>
-          <a href="#story" className="hero-cue">
-            Let’s understand the problem
+          </ul>
+          <a href="#explore" className="hero-cue">
+            Explore my work
             <span className="hero-cue-arrow" aria-hidden="true">↓</span>
           </a>
         </div>
@@ -127,289 +126,91 @@ function Hero({ figureRef, headlineRef, revealed, figureVisible }) {
   );
 }
 
-// How many projects sit under each theme, shown on the orbit and the filter tags.
-const themeCounts = Object.fromEntries(themes.map((t) => [t.id, projects.filter((p) => themesOf(p).includes(t.id)).length])
-);
-const countedThemes = themes.map((t) => ({ ...t, count: themeCounts[t.id] }));
+// The projects under each design challenge, in the order they appear in the data.
+const challengeProjects = Object.fromEntries(themes.map((t) => [t.id, projects.filter((p) => themesOf(p).includes(t.id))]));
+const pad = (n) => String(n).padStart(2, '0');
 
-// The filter groups, as on a shop's product listing: choices within a group widen the results
-// (any of them), and each further group narrows them (all groups must match).
-const FACETS = [
-  {
-    id: 'theme',
-    label: 'Theme',
-    options: themes.map((t) => ({ id: t.id, label: t.label, color: t.color })),
-    has: (project, id) => themesOf(project).includes(id),
-  },
-  {
-    id: 'status',
-    label: 'Status',
-    options: statuses.map((st) => ({ id: st.id, label: st.label, color: st.color })),
-    has: (project, id) => project.status === id,
-  },
-  {
-    id: 'skill',
-    label: 'Skills',
-    // grouped as laid out in the data, keeping only skills some project uses; strays go under "Other"
-    options: (() => {
-      const used = [...new Set(projects.flatMap((p) => p.skills))];
-      const placed = skillGroups.flatMap((g) => g.skills.filter((name) => used.includes(name)).map((name) => ({ id: name, label: name, group: g.label })));
-      const strays = used.filter((name) => !placed.some((option) => option.id === name)).sort((a, b) => a.localeCompare(b));
-      return [...placed, ...strays.map((name) => ({ id: name, label: name, group: 'Other' }))];
-    })(),
-    has: (project, id) => project.skills.includes(id),
-  },
-  {
-    id: 'place',
-    label: 'Where',
-    options: [...new Set(projects.map((p) => p.place).filter(Boolean))].map((place) => ({ id: place, label: place })),
-    has: (project, id) => project.place === id,
-  },
-];
-const NO_FILTERS = Object.fromEntries(FACETS.map((f) => [f.id, []]));
-
-// Whether a project passes the chosen filters; `except` leaves one group out (used for the counts).
-function passes(project, filters, except) {
-  return FACETS.every((f) => {
-    const chosen = filters[f.id];
-    return f.id === except || !chosen.length || chosen.some((id) => f.has(project, id));
-  });
-}
-
-function ProjectCard({ project, state, onHover, onOpen }) {
-  const theme = themeTag(project);
-  const status = statusById[project.status];
-
-  return (
-    <li>
-      <button
-        type="button"
-        className={`project-card ${state}`}
-        style={{ '--c': theme.color }}
-        onMouseEnter={() => onHover(project.id)}
-        onMouseLeave={() => onHover(null)}
-        onFocus={() => onHover(project.id)}
-        onBlur={() => onHover(null)}
-        onClick={() => onOpen(project.id)}
-      >
-        <span className="project-head">
-          <span className="project-theme">
-            <span className="chip-dot" />
-            {theme.label}
-            <span className="project-kind">{project.kind}</span>
-          </span>
-          <span className="project-arrow" aria-hidden="true">↗</span>
-        </span>
-        <span className="project-title">{project.title}</span>
-        <span className="project-tagline">{project.tagline}</span>
-        <span className="project-foot">
-          {/* a status doesn't apply to everything */}
-          {status && <span className="project-status" style={{ '--c': status.color }}>{status.label}</span>}
-          {project.place && <span className="project-place">{project.place}</span>}
-          {project.year && <span className="project-year">{project.year}</span>}
-        </span>
-      </button>
-    </li>
-  );
-}
-
-function Explorer({ aboutOpen, onOpenAbout, onOpenProject }) {
-  const [hoveredProject, setHoveredProject] = useState(null);
-  const [hoveredTheme, setHoveredTheme] = useState(null);
-  const [filters, setFilters] = useState(NO_FILTERS);
-  const [openFacet, setOpenFacet] = useState(null); // which filter menu is showing, if any
-
-  // A filter menu closes on a click anywhere outside it, or on Escape.
-  useEffect(() => {
-    if (!openFacet) return undefined;
-    const onDown = (e) => !e.target.closest('.facet') && setOpenFacet(null);
-    const onKey = (e) => e.key === 'Escape' && setOpenFacet(null);
-    document.addEventListener('mousedown', onDown);
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('mousedown', onDown);
-      document.removeEventListener('keydown', onKey);
-    };
-  }, [openFacet]);
-
-  const toggleFilter = (facetId, id) =>
-    setFilters((current) => {
-      const chosen = current[facetId];
-      return { ...current, [facetId]: chosen.includes(id) ? chosen.filter((x) => x !== id) : [...chosen, id] };
-    });
-  // A click on the orbit makes that theme the only one chosen; clicking it again when it is the only
-  // one clears the theme filter. (The Theme menu still lets several be ticked at once.)
-  const pickTheme = (id) =>
-    setFilters((current) => {
-      const only = current.theme.length === 1 && current.theme[0] === id;
-      return { ...current, theme: only ? [] : [id] };
-    });
-  const clearFilters = () => setFilters(NO_FILTERS);
-  const applied = FACETS.flatMap((f) =>
-    filters[f.id].map((id) => ({ facet: f.id, ...f.options.find((option) => option.id === id) }))
-  );
-  const shownProjects = projects.filter((p) => passes(p, filters));
-
-  // Themes lit on the orbit: a hovered project's win, then a hovered theme, then the chosen ones.
-  let focusIds = null;
-  if (hoveredProject) focusIds = themesOf(projects.find((p) => p.id === hoveredProject));
-  else if (hoveredTheme) focusIds = [hoveredTheme];
-  else if (filters.theme.length) focusIds = filters.theme;
-
-  // Tooltip for the orbit's themes. Fixed to the viewport so the card's edges don't clip it.
-  const [tip, setTip] = useState(null);
-  const hoverTheme = (id, e) => {
-    setHoveredTheme(id);
-    if (!id) return setTip(null);
-    const rect = e.currentTarget.getBoundingClientRect();
-    const margin = 150; // half the tooltip's max width, plus a gutter
-    const x = Math.min(Math.max(rect.left + rect.width / 2, margin), window.innerWidth - margin);
-    setTip({ text: themeById[id].line, x, y: rect.top - 8 });
-  };
+function Explorer({ onOpenProject }) {
+  const featured = showStartHere
+    ? featuredProjects.map((f) => ({ ...f, project: projects.find((p) => p.id === f.id) })).filter((f) => f.project)
+    : [];
 
   return (
     <section className="explorer" id="explore">
       <div className="container">
         <header className="section-head reveal">
           <h2 className="section-title is-accent">Projects</h2>
-          <p className="section-sub">Four places the gap shows up, and the projects that address each one.</p>
         </header>
-        <div className="explorer-card reveal">
+        {/* the reveal sits on a wrapper: the scroll reveal adds a class to it, which React would drop on re-render */}
+        <div className="reveal">
+        <div className="explorer-card">
           <div className="explorer-main">
             <div className="explorer-intro">
-              <h2 className="explorer-title">Four sources of friction.</h2>
-              <p className="explorer-text">
-                Across my work I’ve observed four sources of friction that lead to the translation gap. Each one is paired
-                with the work that addresses it.
-              </p>
+              <div>
+                <h2 className="explorer-title">Where the gap shows up.</h2>
+                <p className="explorer-text">
+                  In practice, the gap between what software makes possible and what people can actually do with it
+                  takes different forms. I explore three recurring design challenges through my past work.
+                </p>
+              </div>
             </div>
-            <Orbit
-              nodes={countedThemes}
-              activeIds={focusIds}
-              selectedIds={filters.theme}
-              meActive={aboutOpen}
-              onSelectMe={onOpenAbout}
-              onSelect={pickTheme}
-              onHover={hoverTheme}
-            />
-            {tip && (
-              <div className="theme-tip" role="tooltip" style={{ left: tip.x, top: tip.y }}>
-                {tip.text}
-              </div>
-            )}
-          </div>
 
-          <aside className="explorer-side" aria-label="Work">
-            <div className="explorer-side-inner">
-              {/* one menu per kind of filter; each opens over the list, so the list keeps its space */}
-              <div className="facet-bar">
-                {FACETS.map((facet) => {
-                  const open = openFacet === facet.id;
-                  const chosen = filters[facet.id].length;
-                  return (
-                    <div key={facet.id} className="facet">
-                      <button
-                        type="button"
-                        className={`filter-toggle ${chosen ? 'has-choice' : ''}`}
-                        aria-expanded={open}
-                        aria-haspopup="true"
-                        onClick={() => setOpenFacet(open ? null : facet.id)}
-                      >
-                        {facet.label}
-                        {chosen > 0 && <span className="facet-chosen">{chosen}</span>}
-                      </button>
-                      {open && (
-                        <div className="facet-menu" role="group" aria-label={`Filter by ${facet.label.toLowerCase()}`}>
-                          {facet.options.map((option, n) => {
-                            const on = filters[facet.id].includes(option.id);
-                            const heading = option.group && option.group !== facet.options[n - 1]?.group && option.group;
-                            // how many results choosing this would give, with the other groups as they are
-                            const count = projects.filter(
-                              (p) => passes(p, filters, facet.id) && facet.has(p, option.id)
-                            ).length;
-                            return (
-                              <Fragment key={option.id}>
-                              {heading && <span className="facet-group">{heading}</span>}
-                              <button
-                                type="button"
-                                className={`facet-option ${on ? 'is-on' : ''}`}
-                                style={{ '--c': option.color ?? 'var(--navy)' }}
-                                aria-pressed={on}
-                                disabled={!count && !on}
-                                onClick={() => toggleFilter(facet.id, option.id)}
-                              >
-                                <span className="facet-check" aria-hidden="true" />
-                                {option.label}
-                                <span className="chip-count">{count}</span>
+            {/* one card per design challenge: its number, name and question, then links to its projects */}
+            <ol className="challenge-cards">
+              {themes.map((t, i) => {
+                const list = challengeProjects[t.id];
+                return (
+                  <li key={t.id} className="challenge-card" style={{ '--c': t.color }}>
+                    <span className="challenge-num">{pad(i + 1)}.</span>
+                    <h3 className="challenge-title">{t.label}</h3>
+                    <p className="challenge-question">{t.question}</p>
+                    <div className="challenge-foot">
+                      <span className="challenge-count">
+                        {list.length ? `${pad(list.length)} ${list.length === 1 ? 'project' : 'projects'}` : 'No projects yet'}
+                      </span>
+                      <ul className="challenge-projects">
+                        {list.map((p) => (
+                          <li key={p.id}>
+                            {/* a project still being written up is listed, greyed out, but can't be opened yet */}
+                            {p.comingSoon ? (
+                              <span className="challenge-link is-soon">
+                                {p.title}
+                                <span className="challenge-soon">Coming soon</span>
+                              </span>
+                            ) : (
+                              <button type="button" className="challenge-link" onClick={() => onOpenProject(p.id)}>
+                                {p.title}
+                                <span aria-hidden="true"> ↗</span>
                               </button>
-                              </Fragment>
-                            );
-                          })}
-                        </div>
-                      )}
+                            )}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  );
-                })}
-              </div>
+                  </li>
+                );
+              })}
+            </ol>
 
-              {/* how many are showing, and, while filters are applied, a way to clear them */}
-              <div className="side-head">
-                <span className="side-count">
-                  {applied.length
-                    ? `Showing ${shownProjects.length} of ${projects.length}`
-                    : `Showing all ${projects.length}`}
-                </span>
-                {applied.length > 0 && (
-                  <button type="button" className="filter-clear" onClick={clearFilters}>
-                    Clear all
-                  </button>
-                )}
-              </div>
-
-              {/* what is applied, each removable, under the menus */}
-              {applied.length > 0 && (
-                <ul className="applied-filters" aria-label="Applied filters">
-                  {applied.map((item) => (
-                    <li key={`${item.facet}-${item.id}`}>
-                      <button
-                        type="button"
-                        className="chip"
-                        onClick={() => toggleFilter(item.facet, item.id)}
-                        aria-label={`Remove filter: ${item.label}`}
-                      >
-                        {item.label} <span aria-hidden="true">✕</span>
+            {/* a shortcut for anyone skimming: two projects to start with, and what each shows */}
+            {featured.length > 0 && (
+              <div className="start-here">
+                <p className="start-here-title">Short on time? Start here:</p>
+                <ul>
+                  {featured.map((f) => (
+                    <li key={f.id}>
+                      <button type="button" className="start-here-link" onClick={() => onOpenProject(f.id)}>
+                        {f.project.title}
+                        <span aria-hidden="true"> ↗</span>
                       </button>
+                      <span className="start-here-why">{f.why}</span>
                     </li>
                   ))}
                 </ul>
-              )}
-
-              {shownProjects.length === 0 && (
-                <p className="list-empty">
-                  Nothing matches all of these filters.{' '}
-                  <button type="button" className="link-btn" onClick={clearFilters}>
-                    Clear all
-                  </button>
-                </p>
-              )}
-              <ul className="project-list">
-                {shownProjects.map((p) => {
-                  let state = '';
-                  if (focusIds) state = themesOf(p).some((id) => focusIds.includes(id)) ? 'is-match' : 'is-dimmed';
-                  if (hoveredProject === p.id) state = 'is-hovered';
-                  return (
-                    <ProjectCard
-                      key={p.id}
-                      project={p}
-                      state={state}
-                      onHover={setHoveredProject}
-                      onOpen={onOpenProject}
-                    />
-                  );
-                })}
-              </ul>
-            </div>
-          </aside>
+              </div>
+            )}
+          </div>
+        </div>
         </div>
       </div>
     </section>
@@ -514,12 +315,7 @@ export default function App() {
             figureVisible={intro === 'done'}
           />
           <Story />
-          <Skills />
-          <Explorer
-            aboutOpen={modal?.type === 'about'}
-            onOpenAbout={openAbout}
-            onOpenProject={openProject}
-          />
+          <Explorer onOpenProject={openProject} />
         </main>
       )}
       <footer className="site-footer">

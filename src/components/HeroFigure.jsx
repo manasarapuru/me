@@ -1,23 +1,23 @@
 import { useId } from 'react';
 import { profile } from '../data.js';
-import CodingScene from './CodingScene.jsx';
+import BalanceScene from './BalanceScene.jsx';
 import HelloScene from './HelloScene.jsx';
 
 // The avatar in its circle, with the name and title curved around it.
 // Rendered both in the intro overlay and in the hero, so it must not rely on fixed ids.
 // In the intro the disk has two sides: she waves hello on the front, and `flipped` turns it over
-// to the typing scene on the back. With `typingOnly` (the hero) it shows the typing scene alone.
-export default function HeroFigure({ figureRef, className = '', style, flipped = false, typingOnly = false }) {
+// to the balance scene on the back. With `sceneOnly` (the hero) it shows the balance scene alone.
+export default function HeroFigure({ figureRef, className = '', style, flipped = false, sceneOnly = false }) {
   const uid = useId().replace(/:/g, '');
   const topId = `arc-top-${uid}`;
   const bottomId = `arc-bottom-${uid}`;
 
   return (
     <div ref={figureRef} className={`hero-figure ${className}`} style={style} aria-hidden="true">
-      {typingOnly ? (
+      {sceneOnly ? (
         <div className="hero-flip is-live">
           <div className="hero-disk hero-face">
-            <CodingScene />
+            <BalanceScene />
           </div>
         </div>
       ) : (
@@ -26,7 +26,7 @@ export default function HeroFigure({ figureRef, className = '', style, flipped =
             <HelloScene />
           </div>
           <div className="hero-disk hero-face hero-face-flip">
-            <CodingScene />
+            <BalanceScene />
           </div>
         </div>
       )}

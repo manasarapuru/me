@@ -4,16 +4,17 @@ export const profile = {
   name: 'Manasa Rapuru',
   fullName: 'Manasa Rapuru', // shown on the curved text around the hero avatar
   initials: 'MR',
-  title: 'Scientific software engineer',
-  role: 'Scientific software engineer',
+  title: 'Design & product engineer',
+  role: 'Designer | Engineer | Bioinformatician', // under the name in the About popup
   email: 'manu.rapuru@gmail.com',
   // Hero statement: the first entry is the headline; each of the rest is a smaller line beneath it.
   // The headline also plays word by word in the intro. Phrases in **double asterisks** are highlighted.
   statement: [
-    'Scientific Software Built with **Science**, **Technology** and **Design** at Its Core.',
-    'Examining where systems and their audiences fall out of sync.',
-    'Developing solutions that make complex interactions more intuitive, accessible, and effective.',
+    'I **design** and **develop** software that finds the **balance** between **technical depth** and users’ **mental models**.',
+    'In the context of disease research, bioinformatics, natural history collections and molecular assay catalogs, I’ve designed and built tools that improve how researchers **access**, **navigate**, **understand** and **share** scientific data.',
   ],
+  // The row of pills under the hero's supporting line.
+  heroTags: ['Product Ownership', 'UX Design', 'Full-Stack Engineering', 'Data Visualization', 'Information Architecture', 'Accessibility'],
   // The About popup's timeline, oldest first. Most entries are chapters of work: things that ran at
   // the same time share a chapter and are listed together on its card. `current` marks the chapter
   // still under way; `summary` is an optional line under the chapter's name.
@@ -106,11 +107,10 @@ export const profile = {
 export const socials = [
   { id: 'linkedin', label: 'LinkedIn', handle: 'Manasa Rapuru', url: 'https://www.linkedin.com/in/manasa-rapuru-b10914126' },
   { id: 'spotify', label: 'Spotify', handle: '', url: '' }, // hidden until the podcast is released: fill in its `url`
-  { id: 'tiktok', label: 'TikTok', handle: '@taughtillustrated', url: 'https://www.tiktok.com/@taughtillustrated' },
 ];
 
 // The story carousel between the hero and the explorer: gap → barrier → my contribution → beyond software.
-// `pose` sets what the guide avatar holds: question | scale | bulb | orbit | wave.
+// `pose` sets what the guide avatar holds: question | scale | bulb | orbit | wave, or `typing` for her at her laptop.
 // `caption` is what the guide "says" while that slide is showing.
 // Slides marked `hidden: true` are kept here but left off the site.
 const allStory = [
@@ -121,28 +121,30 @@ const allStory = [
     caption: 'Here’s a gap I keep seeing.',
     title: 'Lost in translation.',
     body: [
-      'Scientific software often has what its users need, but not in a form that matches how they think. The capability exists, yet accessibility can still be a barrier.',
+      'Powerful software tools are often out of reach for the people who need them, either because there’s no interface to use them through, or because the interface doesn’t match how they think and work. The result is a gap between what technology can do and what people can actually do with it.',
     ],
   },
   {
     id: 'challenge',
-    label: 'Barrier',
+    label: 'Closing the gap',
     pose: 'scale',
     caption: 'Closing it isn’t simple.',
-    title: 'A careful balance.',
+    title: 'Good communication takes balance.',
     body: [
-      'Closing that gap means balancing how researchers work and think against what is technically feasible, scalable, and maintainable. Simplify too far and the depth they rely on is lost.',
+      'The longer this gap persists, the longer people wait to access answers that technology can already provide. Closing it takes more than code; it takes communication. Software needs to reflect how people think, work, and make decisions, while remaining feasible, scalable, and maintainable behind the scenes. It must preserve the depth people rely on without overwhelming them with more than they need.',
     ],
   },
   {
     id: 'approach',
-    label: 'My Contribution',
-    pose: 'orbit',
+    label: 'My work',
+    pose: 'typing',
     caption: 'So here’s how I work.',
-    title: 'My breadth allows me to weigh different principles and adapt my judgment.',
+    title: 'Bridging the technology and the people who use it.',
     body: [
-      'Drawing from biological science, computer science, artificial intelligence and human-computer interaction, I weigh the principles of each and adapt my approach when designing solutions.',
+      'I work on both sides of the gap, understanding the system well enough to build it and the people well enough to shape it around them. With a background spanning biology, computer science, AI and human-computer interaction, I weigh their principles against each other to find the right balance for each problem.',
     ],
+    // the button down to the work
+    cta: 'Explore my work',
   },
   {
     id: 'beyond',
@@ -159,13 +161,21 @@ const allStory = [
 
 export const story = allStory.filter((slide) => !slide.hidden);
 
-// The disconnects the projects address. Order = clockwise from the top of the orbit.
+// The design challenges the projects address, in the order the Projects section numbers them.
 // Each project names one of these in its `theme`, or several as an array.
+// `question` is what the challenge's card in the Projects section asks.
 export const themes = [
-  { id: 'access', label: 'Access', line: 'Putting specialist capability directly in the hands of the people who need it.', color: '#0E7490' },
-  { id: 'understanding', label: 'Understanding', line: 'Bringing data together with its context to make it more applicable.', color: '#1D4ED8' },
-  { id: 'navigation', label: 'Navigation', line: 'Designing cleaner paths that align with people’s mental models.', color: '#B45309' },
-  { id: 'communication', label: 'Communication', line: 'Turning research into something its audience can take in.', color: '#BE185D' },
+  { id: 'access', label: 'Access', question: 'Can people get to the information and capabilities they need?', line: 'Putting specialist capability directly in the hands of the people who need it.', color: '#0E7490' },
+  { id: 'understanding', label: 'Understanding', question: 'Can people make sense of complex information and communicate what matters?', line: 'Bringing data together with its context to make it more applicable.', color: '#1D4ED8' },
+  { id: 'navigation', label: 'Navigation', question: 'Can people find their way through interfaces and workflows?', line: 'Designing cleaner paths that align with people’s mental models.', color: '#B45309' },
+]
+
+// "Short on time? Start here": projects to point a hurried visitor to, and what each one shows.
+// Set `showStartHere` to true to put the strip back under the Projects cards.
+export const showStartHere = false;
+export const featuredProjects = [
+  { id: 'ucsc', why: 'for UX research, interface design and a tested working prototype.' },
+  { id: 'data-access', why: 'for end-to-end product ownership and measurable impact.' },
 ];
 
 // How far a piece of work got; each project names one in its `status`, or leaves it out where it doesn't apply.
@@ -356,30 +366,62 @@ export const skills = [
 //   `practices`, of which only the disciplines are shown, and `personas`).
 // `callout: true` sets a section apart.
 // Entries marked `hidden: true` are kept here but left off the site.
+// The original request workflow for the data-access case study, as a timeline across the two teams.
+// Shown twice: as a bare outline under "Understand the existing system", then filled in with the
+// detail and bottlenecks the interviews surfaced under "Understand stakeholders".
+const requestWorkflow = {
+  deadline: 'The manufacturing team’s deadline: 2 days',
+  lanes: {
+    mfg: { label: 'Manufacturing', color: '#1D4ED8' },
+    bio: { label: 'Bioinformatics', color: '#6D28D9' },
+  },
+  steps: [
+    { lane: 'mfg', title: 'Given a task', time: 'Due in 2 days' },
+    { lane: 'mfg', title: 'Asks bioinformatics for the data', time: 'Handoff', bottleneck: { title: 'Waiting on another team', text: 'Each request joined the queue behind the bioinformatics team’s own work, so the clock was running before any work began.' } },
+    {
+      lane: 'bio',
+      title: 'Compiles the information for each entry',
+      // what that involves, shown in order inside the card
+      work: ['Looks up several databases', 'Runs different analyses', 'Combines the results'],
+      perEntry: '30 min – 1 hour per entry, repeated for each one',
+      bottleneck: { title: 'Manual work that scales', text: 'Every entry meant looking up several databases and running analyses by hand, so a larger request took proportionally longer.' },
+      wide: true,
+    },
+    { lane: 'bio', title: 'Sends the results back', time: 'Handoff', bottleneck: { title: 'Changes restart the cycle', text: 'If the request changed or was misread, it went back through the whole loop, with another wait on each side.' } },
+    { lane: 'mfg', title: 'Delivers the task', time: 'With whatever time is left' },
+  ],
+  // a duration bracketed under a run of steps (`from` and `to` count steps from 0)
+  spans: [{ from: 2, to: 3, label: '1–2 days, depending on the number of entries and the bioinformatics team’s bandwidth' }],
+  caption: 'The original request workflow: most of the 2-day window went to waiting on another team.',
+};
+
 const allProjects = [
   {
     id: 'data-access',
+    short: 'Self-service tool', // its name on the Projects cards
     place: 'Thermo Fisher Scientific',
+    domain: 'Bioinformatics',
     year: '2025',
     status: 'delivered',
     theme: 'access',
     kind: 'Project',
-    title: 'Self-Service Bioinformatics Analyzer',
-    tagline: 'Turning a bioinformatics request into a tool the team can run without bioinformatics',
+    title: 'Replacing Multi-Team Handoffs with a Self-Service Tool',
+    tagline: 'Put a specialist-only workflow directly in users’ hands through a self-serve tool.',
     skills: ['Bioinformatics', 'SQL', 'Linux', 'Python', 'Streamlit', 'FastAPI', 'Flow diagram', 'Interviews'],
     stat: { from: 'Up to 2 days', to: 'Under 1 minute', label: 'Turnaround for a data request' },
+    // the case study's quick-glance summary, shown in place of the before → after figures; **bold** is emphasized
+    summary: 'A self-serve tool that lets a manufacturing team run a bioinformatician-only workflow on their own. The tool allows the manufacturing team to access the information they need in **under a minute** per request, rather than waiting **up to 2 days** for a bioinformatician to deliver it. The result was reduced dependency, along with calculated time and cost savings for both teams.',
     details: [
       {
         heading: 'Challenge',
         text: [
-          'When teams lack direct access to the data they need, they must rely on specialists to retrieve it. This extra step can create delays in downstream work.',
-          'In this case, internal teams depended on bioinformatics specialists to access the data they needed, with even straightforward requests taking up to two days to fulfill.',
+          'When teams lack direct access to the data they need, they must rely on specialists to retrieve it. This extra step can create delays in downstream work. In this case, internal teams depended on bioinformatics specialists to access the data they needed, with even straightforward requests taking up to two days to fulfill.',
         ],
         // plays out in the popup as an animated chat
         chat: {
           caption: 'A typical data request could take up to two days, depending on the supporting team’s workload.',
           people: {
-            alex: { name: 'Alex M.', role: 'Customer-facing team', color: '#1D4ED8' },
+            alex: { name: 'Alex M.', role: 'Internal manufacturing team', color: '#1D4ED8' },
             sam: { name: 'Sam R.', role: 'Bioinformatics', color: '#6D28D9' },
           },
           messages: [
@@ -392,38 +434,64 @@ const allProjects = [
         },
       },
       {
+        heading: 'Role & approach',
+        text: 'I owned the project end to end as its sole product owner, designer and developer: from stakeholder interviews and requirements through design, development, rollout and ongoing maintenance. Design, development and testing ran together rather than one after the other, with the frontend and backend built in parallel, so each prototype was tested against what was technically possible, and each technical constraint shaped the next design. After rollout, the tool continued to be maintained and improved.',
+        // a one-line diagram: every stage under one person, with design, development and testing drawn as a cycle
+        flow: {
+          owner: 'One person throughout: product owner · designer · developer',
+          steps: [
+            'Interviews & requirements',
+            { loop: ['Design', 'Development', 'Testing'] },
+            'Rollout',
+            { name: 'Maintenance & improvement', ongoing: true },
+          ],
+        },
+      },
+      {
         heading: 'Product',
         text: 'I developed a self-service application that made bioinformatics analysis more accessible to the people who needed its outputs. Rather than requiring internal teams to depend on bioinformatics specialists, I translated the underlying workflow into an interface that allowed them to access analytical outputs independently.',
+        // plays out in the popup: a bulk request by file, then a small one typed in
+        tool: {
+          url: 'datatool.internal',
+          caption: 'A representation of the product’s core features: a file for bulk requests, or entries typed in directly.',
+        },
       },
       {
-        heading: 'What it revealed',
-        text: [
-          'The result was a reduction in turnaround time from up to two days to under a minute.',
+        heading: 'Stakeholder feedback',
+        text: 'Feedback was gathered across the groups involved in or affected by the project.',
+        table: [
+          { label: 'Internal manufacturing team', value: 'Increased efficiency, useful, tailored to their needs, and easy to learn' },
+          { label: 'Bioinformatics', value: 'Streamlined their work and addressed a necessary workflow' },
+          { label: 'Subject matter experts', value: 'Useful and incorporated their considerations' },
+          { label: 'PM, R&D & stakeholders', value: 'Met business requirements, added operational value, and had potential beyond the original scope' },
         ],
+        after: 'The broader stakeholder feedback also surfaced potential use for other internal workflows, suggesting that the intervention could function as more than a solution to a single request.',
+        // the before and after, on time and on who has to be involved
+        compare: {
+          before: 'Before',
+          after: 'With the tool',
+          rows: [
+            { label: 'Time', before: 'Up to 2 days', after: 'Under 1 minute' },
+            { label: 'Teams', before: 'Requester + bioinformatics', after: 'Requester only' },
+            { label: 'Handoffs', before: 'At least two', after: 'None' },
+          ],
+        },
       },
-      { group: 'How I approached it' },
+      { group: 'Requirement Gathering' },
       {
-        heading: 'Design question',
-        text: 'How might we make an existing technical capability accessible to the people who need it, without requiring them to become experts in how it works?',
-        callout: true,
-      },
-      {
-        heading: 'Design goals',
-        list: [
-          'Enable a non-bioinformatics team to generate the data independently',
-          'Reduce handoffs between teams',
-          'Translate the existing technical workflow into terms users already understand',
-          'Preserve the accuracy and reliability of the underlying analysis',
-          'Create a workflow that could adapt to related internal use cases',
-        ],
-      },
-      {
-        heading: 'Hybrid workflow',
-        text: [
-          'I led the work end to end, from stakeholder discovery through outcome evaluation. User mental models, scientific and data requirements, and technical implementation were treated not as discrete stages but as interconnected considerations that informed one another throughout the process.',
-          'This required translating user needs into the underlying bioinformatics workflows, determining which complexities to expose or abstract, and shaping the resulting capabilities into an intuitive, self-service experience that users could navigate independently.',
-        ],
         stages: [
+          {
+            title: 'Understand the existing system',
+            text: 'Before any interviews, the original request workflow was charted end to end: which team did what, in what order, and within what deadline. This outline served as a point of reference and a map to add observations to during interviews with the bioinformatics and manufacturing teams.',
+            // the request workflow as first charted: the steps and deadlines only
+            workflow: { ...requestWorkflow, outline: true, caption: 'The request workflow as first charted, before the interviews.' },
+            practices: [
+              { name: 'Current-state workflow / flowchart', discipline: 'UX / Engineering', helps: 'Where information, decisions, and handoffs occur' },
+              { name: 'Data-flow diagram', discipline: 'Engineering / Bioinformatics', helps: 'How data moves technically through the system' },
+              { name: 'Workflow observation / contextual inquiry', discipline: 'UX / Science', helps: 'How the work actually happens versus how people describe it' },
+              { name: 'Scientific workflow analysis', discipline: 'Bioinformatics / Science', helps: 'What transformations, assumptions, and validation steps are required' },
+            ],
+          },
           {
             title: 'Understand stakeholders',
             text: 'Interviews with people on both sides of the request mapped who owned, used and supported the workflow. Two personas captured how differently each team experienced the same handoff.',
@@ -432,14 +500,18 @@ const allProjects = [
               { name: 'Personas / user profiles', discipline: 'UX', helps: 'Different needs, goals, expertise, and mental models' },
               { name: 'Stakeholder mapping', discipline: 'Product / UX', helps: 'Who owns, uses, supports, or is affected by the workflow' },
             ],
+            personasNote: 'Their goals and pain points with the request workflow before the tool.',
+            // shown after the personas: the same workflow, filled in from the interviews
+            mappedNote: 'The interviews then filled in the outline: what each step actually involved, how long it took, and where it held the work up.',
+            mappedWorkflow: requestWorkflow,
             personas: [
               {
                 name: 'Alex M.',
                 role: 'The Requester',
-                team: 'Customer-facing team',
+                team: 'Internal manufacturing team',
                 color: '#1D4ED8',
                 goals: [
-                  'Get data in time to answer clients',
+                  'Get data in time to keep production moving',
                   'Work without depending on another team',
                   'Trust that the data is accurate and current',
                 ],
@@ -467,18 +539,18 @@ const allProjects = [
             ],
           },
           {
-            title: 'Understand the existing system',
-            text: 'Charting the original request workflow showed where decisions and handoffs occurred, and tracing the data through the bioinformatics pipeline showed how it moved. Observing the work in practice surfaced the transformations, assumptions and validation steps the analysis depended on.',
-            practices: [
-              { name: 'Current-state workflow / flowchart', discipline: 'UX / Engineering', helps: 'Where information, decisions, and handoffs occur' },
-              { name: 'Data-flow diagram', discipline: 'Engineering / Bioinformatics', helps: 'How data moves technically through the system' },
-              { name: 'Workflow observation / contextual inquiry', discipline: 'UX / Science', helps: 'How the work actually happens versus how people describe it' },
-              { name: 'Scientific workflow analysis', discipline: 'Bioinformatics / Science', helps: 'What transformations, assumptions, and validation steps are required' },
+            title: 'Defining the solution',
+            text: [
+              'The bottlenecks shared one root cause: every request involved two teams, because the team that needed the information didn’t have the access to get it themselves.',
+              'So the thought became: what if they did? Not access to everything, only to the parts they were allowed to use, with the rest of the workflow kept under the hood and abstracted away from them. That became the proposal for a self-service tool.',
             ],
-          },
-          {
-            title: 'Define the intervention',
-            text: 'The problem was framed around what requesters were ultimately trying to accomplish, then turned into requirements and prioritized into a first version.',
+            // each bottleneck, numbered and titled as in the diagram above, and how the tool answers it
+            fixes: [
+              { title: 'Waiting on another team', fix: 'No more queue: the manufacturing team runs a request when they need it.' },
+              { title: 'Manual work that scales', fix: 'The database lookups and analyses run automatically, removing hours of hand work for every entry.' },
+              { title: 'Changes restart the cycle', fix: 'A changed request is simply run again in under a minute, with no trip back to another team.' },
+            ],
+            after: 'The trade-off was that the bioinformatics team would need to help maintain the tool. That was a fair exchange, because maintenance scales in a way requests never did: a fix made once carries through to every request after it, where before the same work was repeated each time, and keeping the tool running takes far less time than running the requests themselves.',
             practices: [
               { name: 'Problem framing', discipline: 'Product / UX', helps: 'What problem are you actually solving?' },
               { name: 'Jobs-to-be-done / user goals', discipline: 'Product / UX', helps: 'What is the user ultimately trying to accomplish?' },
@@ -486,15 +558,235 @@ const allProjects = [
               { name: 'Prioritization', discipline: 'Product', helps: 'What belongs in the first version versus later?' },
             ],
           },
+        ],
+      },
+      { group: 'Design / Development' },
+      {
+        stages: [
+          {
+            title: 'Design Question',
+            question: 'How might we give a team direct access to the information they need, exposing only what they’re allowed to use and keeping the rest of the workflow under the hood?',
+          },
+          {
+            title: 'Design goals',
+            list: [
+              'Enable a non-bioinformatics team to generate the data independently',
+              'Reduce handoffs between teams',
+              'Translate the existing technical workflow into terms users already understand',
+              'Preserve the accuracy and reliability of the underlying analysis',
+              'Create a workflow that could adapt to related internal use cases',
+              'Include tutorials so new users can learn the tool on their own',
+              'Give users a clear way to reach someone for help when something doesn’t look right',
+            ],
+          },
+          {
+            title: 'Technical goals',
+            // TODO confirm: drafted from the case study's own reasoning; adjust to what the build actually aimed for
+            list: [
+              'Keep the bioinformatics pipeline behind the interface, exposing only the inputs users are allowed to set',
+              'Test use cases and edge cases prior to rollout',
+              'Return results for a full request in a downloadable format',
+              'Develop in modular pieces, so bugs and changes stay contained to a single piece of functionality',
+              'Architect the backend so maintenance stays lightweight, without adding extra burden for the bioinformatics team or myself',
+              'Build on a stack that complies with the organization’s technical constraints',
+            ],
+          },
+        ],
+      },
+      // the work on each side, as collapsible groups: closed until opened
+      {
+        expand: 'Frontend',
+        summary: 'The interface users see, built in parallel with the backend',
+        stages: [
+          {
+            title: 'User flow',
+            text: 'With the tool, a request starts and ends with the manufacturing team. They bring identifiers for one or more requests and leave with the outputs, while the processing in between is handled by the system rather than another team. The first version only took identifiers typed in; uploading a file for bulk requests was added in the second.',
+            // input → processing → output, with the manufacturing team at both ends, in two iterations
+            io: [
+              {
+                label: 'Iteration 1',
+                stages: [
+                  {
+                    title: 'Input',
+                    who: 'Manufacturing',
+                    icon: 'upload',
+                    color: '#1D4ED8',
+                    steps: ['Type in identifiers', 'Submit the request'],
+                  },
+                  {
+                    title: 'Processing',
+                    who: 'System',
+                    icon: 'process',
+                    color: '#15803D',
+                    steps: [{ text: 'Nothing shown while the request runs', empty: true }],
+                  },
+                  {
+                    title: 'Output',
+                    who: 'Manufacturing',
+                    icon: 'download',
+                    color: '#1D4ED8',
+                    steps: ['Download the results'],
+                  },
+                ],
+              },
+              {
+                label: 'Iteration 2',
+                // TODO replace: the same placeholder wireframe for now; swap in each iteration's own screens
+                wireframe: {
+                  file: 'wireframe-tool-screens.png',
+                  alt: 'Wireframes of the tool: an input page to upload a file and submit, a progress page showing it analyzing, an output page to download the results, and a tutorial opened from the help button.',
+                  caption: 'Wireframes of the tool’s screens',
+                },
+                note: 'Bulk requests can now come in as a file, a spinner shows the request is running, and users are told when results are ready.',
+                stages: [
+                  {
+                    title: 'Input',
+                    who: 'Manufacturing',
+                    icon: 'upload',
+                    color: '#1D4ED8',
+                    steps: [{ text: 'Add identifiers for one or more requests', options: ['Upload a file', 'Type a list'], added: true }, 'Submit the request'],
+                  },
+                  {
+                    title: 'Processing',
+                    who: 'System',
+                    icon: 'process',
+                    color: '#15803D',
+                    steps: [{ text: 'A processing spinner shows the request is running', added: true }],
+                  },
+                  {
+                    title: 'Output',
+                    who: 'Manufacturing',
+                    icon: 'download',
+                    color: '#1D4ED8',
+                    steps: [{ text: 'Results ready', added: true }, 'Download the results'],
+                  },
+                ],
+              },
+            ],
+            ioCaption: 'The flow with the tool: the manufacturing team at both ends, and no other team in between.',
+          },
           {
             title: 'Translate into experience',
             text: 'The path a requester would take was designed and prototyped before any building began. Technical options were expressed in the team’s own language, and complexity stayed hidden until it was needed.',
+            // the tool held still, with numbered notes on why each element is there.
+            // `screen` sets what the tool shows; a note's own `screen` changes it while that note is open.
+            // `target` is one of: tabs, tab-text, limits, input, submit, download, help, contact.
+            tool: {
+              url: 'datatool.internal',
+              screen: { mode: 'file', status: 'ready' },
+              annotations: [
+                {
+                  target: 'tabs',
+                  source: 'Design decision',
+                  title: 'Two ways in',
+                  text: 'Some requests cover many entries and some only a few. A spreadsheet handles bulk requests, and typing handles quick ones, so a small request never needs a file.',
+                },
+                {
+                  target: 'limits',
+                  source: 'Design decision',
+                  title: 'Rules shown up front',
+                  text: 'The accepted format and size are visible before anything is added, so an unusable file is caught before it is submitted, not after.',
+                },
+                {
+                  target: 'input',
+                  source: 'Design decision',
+                  title: 'Checked before it runs',
+                  text: 'A file is checked as soon as it is added, and Submit stays unavailable until it passes. This answers a requester pain point: getting the wrong data back when a request is misread.',
+                },
+                {
+                  // TODO confirm: written from the example given; replace with what testing actually found
+                  target: 'submit',
+                  screen: { status: 'processing' },
+                  source: 'From usability testing · Iteration 2',
+                  title: 'A visible processing state',
+                  text: 'Added after testers said they couldn’t tell whether their request had gone through.',
+                },
+                {
+                  target: 'help',
+                  source: 'Design decision',
+                  title: 'Tutorials within reach',
+                  text: 'A help button on every screen opens a short tutorial, so new users can learn the tool on their own instead of asking someone.',
+                },
+                {
+                  target: 'contact',
+                  source: 'Design decision',
+                  title: 'A direct line for problems',
+                  text: 'When something doesn’t look right, users can click here to contact the team or report a bug, instead of working around it or falling back on the old request process.',
+                },
+              ],
+            },
             practices: [
               { name: 'User flow', discipline: 'UX', helps: 'What path should the user take?' },
               { name: 'Information architecture', discipline: 'UX', helps: 'How should functionality be organized?' },
               { name: 'Wireframes / prototypes', discipline: 'UX / Design', helps: 'Can the idea be understood before implementation?' },
               { name: 'Progressive disclosure', discipline: 'UI/UX', helps: 'What complexity can be hidden until it is needed?' },
               { name: 'Plain-language / domain-language design', discipline: 'UX / Science', helps: 'How do you expose technical functionality in familiar terms?' },
+            ],
+          },
+        ],
+      },
+      {
+        expand: 'Backend',
+        summary: 'The pipeline behind it, built in parallel with the frontend',
+        stages: [
+          {
+            title: 'Backend flow',
+            text: 'Behind the interface, the backend takes each request, runs the appropriate workflow for it and returns the results as a download. The second iteration added two checks before any analysis starts: confirming the input exists, or telling the user when it doesn’t, and confirming it maps to the correct workflow. If something still goes wrong, the task ends gracefully and the user sees an error message that explains what to do next.',
+            // input → processing → output on the backend, in two iterations
+            io: [
+              {
+                label: 'Iteration 1',
+                stages: [
+                  {
+                    title: 'Input',
+                    who: 'Backend',
+                    icon: 'upload',
+                    color: '#0E7490',
+                    steps: ['Take the input'],
+                  },
+                  {
+                    title: 'Processing',
+                    who: 'Backend',
+                    icon: 'process',
+                    color: '#15803D',
+                    steps: ['Run the appropriate workflow for the input', 'Format the results'],
+                  },
+                  {
+                    title: 'Output',
+                    who: 'Backend',
+                    icon: 'download',
+                    color: '#0E7490',
+                    steps: ['Make the results downloadable'],
+                  },
+                ],
+              },
+              {
+                label: 'Iteration 2',
+                note: 'Checks added before the analysis starts, and errors handled gracefully.',
+                stages: [
+                  {
+                    title: 'Input',
+                    who: 'Backend',
+                    icon: 'upload',
+                    color: '#0E7490',
+                    steps: ['Take the input', { text: 'Validate that the input exists, or inform the user', added: true }],
+                  },
+                  {
+                    title: 'Processing',
+                    who: 'Backend',
+                    icon: 'process',
+                    color: '#15803D',
+                    steps: [{ text: 'Validate that the input maps to the correct workflow before starting the analysis', added: true }, 'Run the appropriate workflow for the input', 'Format the results', { text: 'If an error occurs, end the current task gracefully', added: true }],
+                  },
+                  {
+                    title: 'Output',
+                    who: 'Backend',
+                    icon: 'download',
+                    color: '#0E7490',
+                    steps: ['Make the results downloadable', { text: 'If an error occurs, show an instructive error message', added: true }],
+                  },
+                ],
+              },
             ],
           },
           {
@@ -506,43 +798,37 @@ const allProjects = [
               { name: 'Validation / testing', discipline: 'Science / Engineering', helps: 'Does the implementation produce the correct result?' },
             ],
           },
+        ],
+      },
+      { group: 'Rollout' },
+      {
+        stages: [
           {
-            title: 'Iterate',
-            text: 'Demonstrations and usability sessions with users shaped each revision. Technical and stakeholder reviews confirmed the tool was scientifically sound and met the broader organizational need.',
-            practices: [
-              { name: 'Usability testing', discipline: 'UX', helps: 'Can people actually use it?' },
-              { name: 'Demonstrations / feedback sessions', discipline: 'Product / UX', helps: 'Does the workflow match expectations?' },
-              { name: 'Technical review', discipline: 'Engineering / Science', helps: 'Is the implementation scientifically and technically sound?' },
-              { name: 'Stakeholder review', discipline: 'Product', helps: 'Does it satisfy the broader organizational need?' },
-            ],
+            title: 'Launch',
+            // TODO confirm: how the tool was introduced to the team
+            text: 'The tool was released to the manufacturing team with its tutorials built in and a direct line for reporting problems, so the team could start using it on their own from day one.',
           },
           {
-            title: 'Evaluate',
-            text: 'A before-and-after comparison of the workflow measured the change in turnaround and whether the team adopted the tool.',
+            title: 'Measure',
+            text: 'A before-and-after comparison of the workflow measured the change in turnaround, from up to 2 days to under a minute per request, and whether the team adopted the tool.',
             practices: [
               { name: 'Outcome measurement', discipline: 'Product / Science', helps: 'Did the intervention actually improve the workflow?' },
               { name: 'Adoption / usage', discipline: 'Product', helps: 'Did people actually use it?' },
               { name: 'Comparative before/after analysis', discipline: 'Product / Science', helps: 'What changed because of the intervention?' },
             ],
           },
+          {
+            title: 'Maintain and improve',
+            text: 'After rollout, the tool kept being maintained and improved with the bioinformatics team. Because it was built in modular pieces, a fix made once carries through to every request after it, so keeping it running takes far less time than the requests it replaced.',
+          },
         ],
-      },
-      { group: 'Feedback' },
-      {
-        heading: 'Stakeholder feedback',
-        text: 'Feedback was gathered across the groups involved in or affected by the project.',
-        table: [
-          { label: 'Customer-facing team', value: 'Increased efficiency, useful, tailored to their needs, and easy to learn' },
-          { label: 'Bioinformatics', value: 'Streamlined their work and addressed a necessary workflow' },
-          { label: 'Subject matter experts', value: 'Useful and incorporated their considerations' },
-          { label: 'PM, R&D & stakeholders', value: 'Met business requirements, added operational value, and had potential beyond the original scope' },
-        ],
-        after: 'The broader stakeholder feedback also surfaced potential use for other internal workflows, suggesting that the intervention could function as more than a solution to a single request.',
       },
     ],
   },
   {
     id: 'rag-metadata',
+    hidden: true, // off for now, while it's reworked
+    short: 'RAG chatbot', // its name on the Projects cards
     place: 'Thermo Fisher Scientific',
     year: '2025',
     status: 'testing',
@@ -550,13 +836,14 @@ const allProjects = [
     kind: 'Project',
     title: 'Context-Aware RAG Chatbot',
     tagline: 'Bringing context to raw datasets through conversation, so they can be understood and put to use',
+    summary: 'A RAG-based chatbot that brings context to raw datasets, letting users explore and connect information across datasets in their own words instead of piecing together metadata and documentation by hand. In testing, it made datasets **easier to understand and use**.',
     skills: ['RAG', 'LLMs', 'Python', 'SQL', 'FastAPI', 'React.js', 'User feedback', 'Flow diagram'],
     details: [
       {
         heading: 'Challenge',
         text: [
-          'When related information is spread across datasets, users need a way to connect it to understand the bigger picture.',
-          'Without a platform to bring different types of data together, users struggled to explore relationships and draw meaningful insights from the information available.',
+          'When data is siloed across separate datasets, understanding the bigger picture means connecting it by hand: a slow, inefficient process that can’t keep pace with what technology can do to connect it automatically.',
+          'In this project, there was no single place to explore the data, so users had to piece it together from raw files and documentation, making it hard to see how datasets related or to draw insights from them.',
         ],
         // shown in the popup as a looping scene; the windows are left untitled (the names only tell them apart here)
         files: {
@@ -580,6 +867,20 @@ const allProjects = [
             'How has it been studied in the literature?',
           ],
           caption: 'Datasets without their context: nothing to say what each one represents, what it relates to, or how it has been studied.',
+        },
+      },
+      {
+        heading: 'Role & approach',
+        text: 'I owned the project end to end as its sole product owner, designer and developer: from stakeholder interviews and requirements through design, development, rollout and ongoing maintenance. Design, development and testing ran together rather than one after the other, with the frontend and backend built in parallel, so each prototype was tested against what was technically possible, and each technical constraint shaped the next design. After rollout, the tool continued to be maintained and improved.',
+        // a one-line diagram: every stage under one person, with design, development and testing drawn as a cycle
+        flow: {
+          owner: 'One person throughout: product owner · designer · developer',
+          steps: [
+            'Interviews & requirements',
+            { loop: ['Design', 'Development', 'Testing'] },
+            'Rollout',
+            { name: 'Maintenance & improvement', ongoing: true },
+          ],
         },
       },
       {
@@ -629,34 +930,43 @@ const allProjects = [
           'By bringing contextual information and exploratory interactions into one place, the system reduced the need to piece together information from separate datasets and documentation. Combining metadata generation, conversational querying, and data exploration supported multiple ways for users to build context and investigate questions relevant to their needs.',
         ],
       },
-      { group: 'How I approached it' },
+      { group: 'Requirement Gathering' },
       {
-        heading: 'Design question',
-        text: 'How might we build an application with a complex backend architecture and an additional layer of AI verification, while delivering a simple, intuitive front-end experience?',
-        callout: true,
-      },
-      {
-        heading: 'Design goals',
-        list: [
-          'Make datasets easier to understand without requiring users to inspect raw data or documentation independently',
-          'Generate useful metadata and contextual descriptions',
-          'Allow users to ask questions using language relevant to their specific use case',
-          'Connect conversational responses back to the underlying data and source context',
-          'Reduce the manual effort required to interpret and explore datasets',
-          'Preserve the reliability and traceability of the information provided',
-        ],
-      },
-      {
-        heading: 'Hybrid workflow',
-        text: 'Understand → Structure → Retrieve → Converse → Validate → Iterate',
         stages: [
           {
-            title: 'Understand',
+            title: 'Understand the existing system',
+            text: [
+              'I examined the datasets, existing documentation, terminology, and metadata to understand what context existed and where the gaps were.',
+              'The data behind this project was relational. Its value lies in the connections between datasets, and connections are best understood by having them explained.',
+            ],
+          },
+          {
+            title: 'Understand stakeholders',
             text: 'I talked with users and subject matter experts to identify what information was needed to interpret and use the datasets.',
           },
           {
-            title: 'Structure',
-            text: 'I examined the datasets, existing documentation, terminology, and metadata to understand what context existed and where the gaps were.',
+            title: 'Defining the solution',
+            text: 'The relational data shaped the interface. Users came asking how things relate, so a conversation, answering in their own words and grounded in the underlying sources, fit the data better than charts would.',
+          },
+        ],
+      },
+      { group: 'Design / Development' },
+      {
+        stages: [
+          {
+            title: 'Design Question',
+            question: 'How might we build an application with a complex backend architecture and an additional layer of AI verification, while delivering a simple, intuitive front-end experience?',
+          },
+          {
+            title: 'Design goals',
+            list: [
+              'Make datasets easier to understand without requiring users to inspect raw data or documentation independently',
+              'Generate useful metadata and contextual descriptions',
+              'Allow users to ask questions using language relevant to their specific use case',
+              'Connect conversational responses back to the underlying data and source context',
+              'Reduce the manual effort required to interpret and explore datasets',
+              'Preserve the reliability and traceability of the information provided',
+            ],
           },
           {
             title: 'Retrieve',
@@ -666,6 +976,11 @@ const allProjects = [
             title: 'Converse',
             text: 'I shaped the chatbot around users’ questions and use cases, allowing them to explore the dataset through natural-language interaction.',
           },
+        ],
+      },
+      { group: 'Rollout' },
+      {
+        stages: [
           {
             title: 'Validate',
             text: 'I evaluated whether responses were useful, contextually appropriate, and grounded in the underlying information.',
@@ -676,7 +991,6 @@ const allProjects = [
           },
         ],
       },
-      { group: 'Feedback' },
       {
         heading: 'Result',
         text: 'The chatbot improved data comprehension and usability by bringing contextual information into the user’s interaction with the dataset. It reduced the need for users to manually piece together metadata and documentation and created a more accessible path from raw data to understanding and downstream use.',
@@ -685,6 +999,8 @@ const allProjects = [
   },
   {
     id: 'alzheimers',
+    comingSoon: true, // listed, greyed out and not yet openable
+    short: 'Alzheimer’s visualization', // its name on the Projects cards
     place: 'Boston University',
     year: '2023',
     status: 'delivered',
@@ -692,16 +1008,9 @@ const allProjects = [
     kind: 'Project',
     title: 'In-Lab Alzheimer’s Research Data Explorer',
     tagline: 'Organizing complex disease data around the questions researchers actually ask',
+    summary: 'A front end that organizes complex RNA-seq results around the questions researchers actually ask, so lab members without programming backgrounds could explore **gene expression, differential expression and pathway analyses** in one interface instead of fragmented files.',
     skills: ['Neurodegenerative disease research', 'HTML', 'CSS', 'JavaScript', 'Plotly.js', 'Python'],
     details: [
-      {
-        heading: 'Product',
-        text: [
-          'A visualization platform for exploring human postmortem brain RNA-seq data related to APOE4 and Alzheimer’s disease.',
-          'The broader project was a collaborative effort, with team members working across different parts of the data analysis and platform. **My contribution focused on designing and implementing the front end of the visualization platform**, including how the different analysis types were organized, presented, and made interactive for researchers without programming backgrounds.',
-          'The platform brought together gene expression, differential expression, and pathway-level analyses into a single exploratory environment.',
-        ],
-      },
       {
         heading: 'Challenge',
         text: [
@@ -727,16 +1036,18 @@ const allProjects = [
         },
       },
       {
-        heading: 'Front-end challenge',
-        text: 'The project incorporated several types of analyses, each answering a different scientific question.',
-        table: [
-          { label: 'CPM', value: 'What is the level of expression of this gene?' },
-          { label: 'Differential expression', value: 'In which phenotypes or genotypes is my gene differentially expressed?' },
-          { label: 'Pathway enrichment', value: 'Which biological pathways are associated with these changes?' },
-          { label: 'Leading-edge analysis', value: 'Which genes are contributing most strongly to the enrichment of a pathway?' },
+        heading: 'Role & approach',
+        text: [
+          '**Front-end Developer · Scientific UX**',
+          'I worked with the broader project team to understand the purpose and structure of different genomic analyses, then designed and implemented the front-end experience that connected those analyses to the questions users were trying to answer.',
         ],
-        after: [
-          'From a front-end perspective, this created a challenge: **how could these different analyses be brought together into one interface without making users understand the technical structure behind them?** The intended users included lab members without programming backgrounds who needed to explore the results independently.',
+      },
+      {
+        heading: 'Product',
+        text: [
+          'A visualization platform for exploring human postmortem brain RNA-seq data related to APOE4 and Alzheimer’s disease.',
+          'The broader project was a collaborative effort, with team members working across different parts of the data analysis and platform. **My contribution focused on designing and implementing the front end of the visualization platform**, including how the different analysis types were organized, presented, and made interactive for researchers without programming backgrounds.',
+          'The platform brought together gene expression, differential expression, and pathway-level analyses into a single exploratory environment.',
         ],
       },
       {
@@ -786,28 +1097,15 @@ const allProjects = [
           'It reinforced an important principle in my work: **The structure of the interface should reflect the way people use the information, not simply the way the data happens to be stored.**',
         ],
       },
-      { group: 'How I approached it' },
-      {
-        heading: 'Design question',
-        text: 'How might we organize different types of genomic analyses around the questions researchers actually want to answer?',
-        callout: true,
-      },
-      {
-        heading: 'Design goals',
-        list: [
-          'Make complex analysis results accessible to researchers without programming backgrounds',
-          'Bring multiple analysis types into a coherent exploration experience',
-          'Make the purpose of each analysis understandable',
-          'Present only the controls relevant to the selected inquiry',
-          'Connect each scientific question to the appropriate data and visualization',
-          'Allow users to explore results without needing to understand the underlying code or data structure',
-        ],
-      },
+      { group: 'Requirement Gathering' },
       {
         stages: [
           {
-            title: 'Understanding the analyses',
-            text: 'Although the project was divided among multiple team members, I needed to understand the purpose and output of the analyses I was integrating into the front end. I mapped each analysis to the question it could answer:',
+            title: 'Understand the existing system',
+            text: [
+              'The data behind this project was quantitative: gene expression levels, differential expression and pathway enrichment scores. Values like these only carry meaning in comparison, one gene against another, one genotype or phenotype against another.',
+              'Although the project was divided among multiple team members, I needed to understand the purpose and output of the analyses I was integrating into the front end. I mapped each analysis to the question it could answer:',
+            ],
             table: [
               { label: 'What is the gene’s level of expression?', value: '**CPM** · Gene expression' },
               { label: 'Where is my gene differentially expressed?', value: '**DEG** · Differences across phenotypes or genotypes' },
@@ -815,6 +1113,37 @@ const allProjects = [
               { label: 'Which genes contribute most to the pathway signal?', value: '**Leading edge** · Genes driving enrichment' },
             ],
             after: 'This became the basis for how I structured the user experience.',
+          },
+          {
+            title: 'Understand stakeholders',
+            text: 'The intended users included lab members without programming backgrounds who needed to explore the results independently.',
+          },
+          {
+            title: 'Defining the solution',
+            text: [
+              'From a front-end perspective, the challenge was: **how could these different analyses be brought together into one interface without making users understand the technical structure behind them?**',
+              'The quantitative data shaped the interface. Researchers came asking how things compare, and comparing many values at once is what visuals do best, so the front end was built around interactive charts rather than tables or text.',
+            ],
+          },
+        ],
+      },
+      { group: 'Design / Development' },
+      {
+        stages: [
+          {
+            title: 'Design Question',
+            question: 'How might we organize different types of genomic analyses around the questions researchers actually want to answer?',
+          },
+          {
+            title: 'Design goals',
+            list: [
+              'Make complex analysis results accessible to researchers without programming backgrounds',
+              'Bring multiple analysis types into a coherent exploration experience',
+              'Make the purpose of each analysis understandable',
+              'Present only the controls relevant to the selected inquiry',
+              'Connect each scientific question to the appropriate data and visualization',
+              'Allow users to explore results without needing to understand the underlying code or data structure',
+            ],
           },
           {
             title: 'Translating analysis into interaction',
@@ -852,6 +1181,11 @@ const allProjects = [
             ],
             after: 'Because the project was collaborative, this also required coordinating with team members responsible for the underlying analyses and data.',
           },
+        ],
+      },
+      { group: 'Rollout' },
+      {
+        stages: [
           {
             title: 'Iteration and feedback',
             text: 'I demonstrated the interface and iterated based on feedback from the team and intended users. This helped refine:',
@@ -866,7 +1200,6 @@ const allProjects = [
           },
         ],
       },
-      { group: 'Outcome' },
       {
         heading: 'Result',
         text: [
@@ -875,17 +1208,12 @@ const allProjects = [
           'The project demonstrated my ability to work at the intersection of **scientific understanding, information architecture, interaction design, visualization, and front-end development**.',
         ],
       },
-      {
-        heading: 'My role',
-        text: [
-          '**Front-end Developer · Scientific UX**',
-          'I worked with the broader project team to understand the purpose and structure of different genomic analyses, then designed and implemented the front-end experience that connected those analyses to the questions users were trying to answer.',
-        ],
-      },
     ],
   },
   {
     id: 'ucsc',
+    comingSoon: true, // listed, greyed out and not yet openable
+    short: 'Genome Browser', // its name on the Projects cards
     place: 'Independent',
     year: '2026',
     status: 'concept',
@@ -893,13 +1221,10 @@ const allProjects = [
     kind: 'Project',
     title: 'UCSC Genome Browser Reimagined',
     tagline: 'A self-initiated redesign exploring density and hierarchy in scientific tooling',
+    summary: 'A self-initiated redesign of the UCSC Genome Browser that structures its density rather than removing it. In a small concept test, **all 3 users** rated it more efficient than the original, with an average of **4.7 / 5** for interface clarity.',
     skills: ['Claude', 'Figma', 'React.js', 'Heuristic evaluation', 'Survey design'],
     meta: 'Bioinformatics Tooling · Design exploration, tested concept · Live front-end prototype, no backend',
     details: [
-      {
-        heading: 'Product',
-        text: 'A self-initiated redesign of the UCSC Genome Browser that explores how a tool used daily by researchers could be made less cognitively demanding while preserving the depth users rely on.',
-      },
       {
         heading: 'Challenge',
         text: [
@@ -917,6 +1242,24 @@ const allProjects = [
           ],
           caption: 'Row upon row of near-identical controls, with no hierarchy, no clear active state and no guidance.',
         },
+      },
+      {
+        heading: 'Role & approach',
+        text: 'I owned the project end to end as its sole product owner, designer and developer: from stakeholder interviews and requirements through design, development, rollout and ongoing maintenance. Design, development and testing ran together rather than one after the other, with the frontend and backend built in parallel, so each prototype was tested against what was technically possible, and each technical constraint shaped the next design. After rollout, the tool continued to be maintained and improved.',
+        // a one-line diagram: every stage under one person, with design, development and testing drawn as a cycle
+        flow: {
+          owner: 'One person throughout: product owner · designer · developer',
+          steps: [
+            'Interviews & requirements',
+            { loop: ['Design', 'Development', 'Testing'] },
+            'Rollout',
+            { name: 'Maintenance & improvement', ongoing: true },
+          ],
+        },
+      },
+      {
+        heading: 'Product',
+        text: 'A self-initiated redesign of the UCSC Genome Browser that explores how a tool used daily by researchers could be made less cognitively demanding while preserving the depth users rely on.',
       },
       {
         heading: 'Intervention',
@@ -950,28 +1293,11 @@ const allProjects = [
           'It also reinforced something I had begun noticing in scientific software more broadly: **A tool can contain everything a researcher needs and still create friction if the interface does not help users understand where they are, what they can do, and what is relevant at that moment.**',
         ],
       },
-      { group: 'How I approached it' },
-      {
-        heading: 'Design question',
-        text: 'How can the interface help users explore genomic data efficiently while keeping flexibility and depth intact?',
-        callout: true,
-      },
-      {
-        heading: 'Design goals',
-        list: [
-          'Reduce unnecessary cognitive load',
-          'Improve navigation and information hierarchy',
-          'Make the current state of the interface more apparent',
-          'Provide context without overwhelming the user',
-          'Help less experienced users understand the interface',
-          'Preserve functionality and depth for experienced researchers',
-          'Explore whether small structural changes could meaningfully improve usability',
-        ],
-      },
+      { group: 'Requirement Gathering' },
       {
         stages: [
           {
-            title: 'Heuristic evaluation',
+            title: 'Understand the existing system',
             text: 'I evaluated the existing interface against usability heuristics and rated each finding by severity.',
             table: [
               { label: 'Feedback · High', value: 'Selected tracks do not refresh upon selection, leaving users unsure whether their action registered.' },
@@ -980,6 +1306,27 @@ const allProjects = [
               { label: 'Visibility · Medium', value: 'There is no clear indication of which tracks are currently active; open and closed states are not visually distinguishable.' },
               { label: 'User control · Medium', value: 'The toggle system is inconsistent and hard to parse; users cannot easily reverse or compare track selections.' },
               { label: 'Help & context · Medium', value: 'Sections have no labels or explanations; users with less domain knowledge have no anchor point for navigation.' },
+            ],
+          },
+        ],
+      },
+      { group: 'Design / Development' },
+      {
+        stages: [
+          {
+            title: 'Design Question',
+            question: 'How can the interface help users explore genomic data efficiently while keeping flexibility and depth intact?',
+          },
+          {
+            title: 'Design goals',
+            list: [
+              'Reduce unnecessary cognitive load',
+              'Improve navigation and information hierarchy',
+              'Make the current state of the interface more apparent',
+              'Provide context without overwhelming the user',
+              'Help less experienced users understand the interface',
+              'Preserve functionality and depth for experienced researchers',
+              'Explore whether small structural changes could meaningfully improve usability',
             ],
           },
           {
@@ -1023,6 +1370,11 @@ const allProjects = [
             title: 'Vibe coding',
             text: 'I built the redesign in React.js, using the browser directly as the prototyping environment. Vibe coding let the interface decisions stay grounded in real interaction behavior rather than static mockups, making it faster to validate layout density, toggle responsiveness, and the AI search integration.',
           },
+        ],
+      },
+      { group: 'Rollout' },
+      {
+        stages: [
           {
             title: 'Concept testing',
             text: 'I shared the live prototype with 3 users at varying familiarity levels, from active users to those familiar but not regular, and asked them to explore freely before completing a short survey. The goal was directional signal, not statistical proof.',
@@ -1045,7 +1397,6 @@ const allProjects = [
           },
         ],
       },
-      { group: 'Outcome' },
       {
         heading: 'Result',
         text: [
@@ -1068,20 +1419,19 @@ const allProjects = [
   },
   {
     id: 'posters',
+    hidden: true, // off for now, while it's reworked
+    short: 'Poster companion', // its name on the Projects cards
     place: 'Independent',
     year: '2026',
     status: 'concept',
-    theme: 'communication',
+    theme: 'understanding',
     kind: 'Project',
     title: 'AI-Powered Short-Form Companion for Scientific Posters',
     tagline: 'Making dense research easier to take in at a glance',
+    summary: 'A two-sided product concept: researchers generate and review an AI-written, plain-language companion for their poster, designed to take **under five minutes**, and attendees scan a QR code to grasp the research **in seconds**. Built as a working prototype, not yet tested with users.',
     skills: ['React.js', 'LLMs', 'User flow design'],
     meta: 'Research Communication · Design exploration, untested concept',
     details: [
-      {
-        heading: 'Product',
-        text: 'A two-sided product concept that uses AI to create short, plain-language digital companions for scientific posters. Researchers generate and review the companion before a conference, while attendees access it through a QR code to quickly understand the research and decide whether to engage more deeply.',
-      },
       {
         heading: 'Challenge',
         text: [
@@ -1094,6 +1444,24 @@ const allProjects = [
           questions: ['What is this actually about?', 'What does this figure show?', 'Is this relevant to me?'],
           caption: 'Minutes at a single poster, and still unsure what it says or whether it matters to them.',
         },
+      },
+      {
+        heading: 'Role & approach',
+        text: 'I owned the project end to end as its sole product owner, designer and developer: from stakeholder interviews and requirements through design, development, rollout and ongoing maintenance. Design, development and testing ran together rather than one after the other, with the frontend and backend built in parallel, so each prototype was tested against what was technically possible, and each technical constraint shaped the next design. After rollout, the tool continued to be maintained and improved.',
+        // a one-line diagram: every stage under one person, with design, development and testing drawn as a cycle
+        flow: {
+          owner: 'One person throughout: product owner · designer · developer',
+          steps: [
+            'Interviews & requirements',
+            { loop: ['Design', 'Development', 'Testing'] },
+            'Rollout',
+            { name: 'Maintenance & improvement', ongoing: true },
+          ],
+        },
+      },
+      {
+        heading: 'Product',
+        text: 'A two-sided product concept that uses AI to create short, plain-language digital companions for scientific posters. Researchers generate and review the companion before a conference, while attendees access it through a QR code to quickly understand the research and decide whether to engage more deeply.',
       },
       {
         heading: 'Intervention',
@@ -1117,46 +1485,11 @@ const allProjects = [
           'This shifted the design focus from **“How can AI summarize a poster?”** to **“What information does each side need, and how should the system connect them?”**',
         ],
       },
-      { group: 'How I approached it' },
-      {
-        heading: 'Design question',
-        text: 'How might we create a low-effort way for researchers to communicate their work beyond the poster, while giving attendees a faster way to understand and navigate research?',
-        callout: true,
-      },
-      {
-        heading: 'Design goals',
-        table: [
-          {
-            label: 'For researchers',
-            items: [
-              'Minimize preparation effort',
-              'Preserve control over the generated content',
-              'Extend communication beyond repeated explanations during the session',
-            ],
-          },
-          {
-            label: 'For attendees',
-            items: [
-              'Access information within seconds',
-              'Establish an entry point into unfamiliar research',
-              'Quickly assess whether a poster is relevant',
-              'Revisit the research after the session',
-            ],
-          },
-          {
-            label: 'For the product',
-            items: [
-              'Preserve the depth and structure of the original research',
-              'Add a layer of accessibility without replacing the poster',
-              'Make the experience scalable without requiring design expertise',
-            ],
-          },
-        ],
-      },
+      { group: 'Requirement Gathering' },
       {
         stages: [
           {
-            title: 'Exploring the intervention',
+            title: 'Defining the solution',
             text: 'Before committing to a digital format, I explored three ways a companion artifact could fit into the existing poster experience:',
             table: [
               { label: 'Take-home plain-language handout', value: 'A printed summary of the poster that attendees could take with them.' },
@@ -1166,6 +1499,45 @@ const allProjects = [
             after: [
               'The digital artifact was selected because it could remain connected to the original research, extend beyond the physical session, and scale without printing or physical management.',
               'The tradeoff was presenter effort. This became an explicit product constraint: **setup should take less than five minutes and require no technical or design expertise.**',
+            ],
+          },
+        ],
+      },
+      { group: 'Design / Development' },
+      {
+        stages: [
+          {
+            title: 'Design Question',
+            question: 'How might we create a low-effort way for researchers to communicate their work beyond the poster, while giving attendees a faster way to understand and navigate research?',
+          },
+          {
+            title: 'Design goals',
+            table: [
+              {
+                label: 'For researchers',
+                items: [
+                  'Minimize preparation effort',
+                  'Preserve control over the generated content',
+                  'Extend communication beyond repeated explanations during the session',
+                ],
+              },
+              {
+                label: 'For attendees',
+                items: [
+                  'Access information within seconds',
+                  'Establish an entry point into unfamiliar research',
+                  'Quickly assess whether a poster is relevant',
+                  'Revisit the research after the session',
+                ],
+              },
+              {
+                label: 'For the product',
+                items: [
+                  'Preserve the depth and structure of the original research',
+                  'Add a layer of accessibility without replacing the poster',
+                  'Make the experience scalable without requiring design expertise',
+                ],
+              },
             ],
           },
           {
@@ -1213,7 +1585,7 @@ const allProjects = [
           },
         ],
       },
-      { group: 'Outcome' },
+      { group: 'Rollout' },
       {
         heading: 'Result',
         text: [
@@ -1233,7 +1605,7 @@ const allProjects = [
     hidden: true, // not released yet
     year: '2026',
     status: 'soon',
-    theme: 'communication',
+    theme: 'understanding',
     kind: 'Hobby',
     title: 'Podcast on Accessible Science Communication',
     tagline: 'Combining practices from psychology, public health, and biotech',
@@ -1249,8 +1621,9 @@ const allProjects = [
   {
     id: 'art',
     place: 'Independent',
+    hidden: true, // off for now
     year: '2026',
-    theme: 'communication',
+    theme: 'understanding',
     kind: 'Hobby',
     title: 'Animated Biology Illustrations',
     tagline: 'Animations illustrating biological concepts',
@@ -1295,6 +1668,7 @@ const allProjects = [
   },
   {
     id: 'academy-volunteer',
+    short: 'User flow design', // its name on the Projects cards
     place: 'California Academy of Sciences',
     year: '2026',
     status: 'testing',

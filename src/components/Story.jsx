@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { story } from '../data.js';
 import Avatar from './Avatar.jsx';
+import CodingScene from './CodingScene.jsx';
 
 // Props the guide holds up, drawn in the avatar's 120x120 space just above the raised hand (≈105, 66).
 export function GuideProps({ pose }) {
@@ -116,7 +117,7 @@ export default function Story() {
     >
       <div className="container">
         <header className="section-head reveal">
-          <h2 className="section-title is-accent">Problem</h2>
+          <h2 className="section-title is-accent">What I do</h2>
           <p className="section-sub">Scientific software often holds what people need, in a form they can’t easily use.</p>
         </header>
         <div
@@ -127,13 +128,17 @@ export default function Story() {
           onBlur={() => setPaused(false)}
         >
         <div className="story-guide" aria-hidden="true">
-          <div className="hero-disk guide-disk">
-            <Avatar className="guide-avatar" track={false} hold={!waving} wave={waving} grin={waving} />
-            <GuideProps pose={slide.pose} />
+          {/* the 'typing' pose swaps her held prop for the scene of her at her laptop */}
+          <div className={`hero-disk guide-disk ${slide.pose === 'typing' ? 'is-live' : ''}`}>
+            {slide.pose === 'typing' ? (
+              <CodingScene />
+            ) : (
+              <>
+                <Avatar className="guide-avatar" track={false} hold={!waving} wave={waving} grin={waving} />
+                <GuideProps pose={slide.pose} />
+              </>
+            )}
           </div>
-          <p key={slide.id} className="guide-caption">
-            {slide.caption}
-          </p>
         </div>
 
         <div className="carousel" onKeyDown={onKeyDown}>
@@ -150,7 +155,6 @@ export default function Story() {
                 className={`carousel-tab ${i === index ? 'is-active' : ''} ${i < index ? 'is-past' : ''}`}
                 onClick={() => go(i)}
               >
-                <span className="carousel-tab-num">{String(i + 1).padStart(2, '0')}</span>
                 {s.label}
               </button>
             ))}
@@ -186,31 +190,44 @@ export default function Story() {
                       ))}
                     </ul>
                   )}
+                  {/* the slide tracker, right under the text; each slide carries its own copy */}
+                  <div className="carousel-dots">
+                    {story.map((d, n) => (
+                      <button
+                        key={d.id}
+                        type="button"
+                        className={`carousel-dot ${n === i ? 'is-active' : ''}`}
+                        onClick={() => go(n)}
+                        tabIndex={i === index ? 0 : -1}
+                        aria-label={`Show “${d.label}”`}
+                        aria-current={n === i}
+                      >
+                        <span className="carousel-dot-mark" />
+                      </button>
+                    ))}
+                  </div>
+                  {s.steps && (
+                    <ol className="slide-steps">
+                      {s.steps.map((step, n) => (
+                        <li key={step.title}>
+                          <span className="slide-step-num">{String(n + 1).padStart(2, '0')}</span>
+                          <strong className="slide-step-title">{step.title}</strong>
+                          <span className="slide-step-text">{step.text}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                  {s.cta && (
+                    <div className="slide-cta">
+                      <a href="#explore" className="hero-cue is-light" tabIndex={i === index ? 0 : -1}>
+                        {s.cta}
+                        <span className="hero-cue-arrow" aria-hidden="true">↓</span>
+                      </a>
+                    </div>
+                  )}
                 </article>
               ))}
             </div>
-          </div>
-
-          <div className="carousel-dots">
-            {story.map((s, i) => (
-              <button
-                key={s.id}
-                type="button"
-                className={`carousel-dot ${i === index ? 'is-active' : ''}`}
-                onClick={() => go(i)}
-                aria-label={`Show “${s.label}”`}
-                aria-current={i === index}
-              >
-                <span className="carousel-dot-mark" />
-              </button>
-            ))}
-          </div>
-
-          <div className="slide-cta">
-            <a href="#explore" className="hero-cue is-light">
-              Explore all work
-              <span className="hero-cue-arrow" aria-hidden="true">↓</span>
-            </a>
           </div>
         </div>
         </div>

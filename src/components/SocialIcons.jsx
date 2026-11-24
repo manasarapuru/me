@@ -9,6 +9,16 @@ const GLYPHS = {
       <path d="M10.6 10h2.5v1.2c.6-.9 1.6-1.5 3-1.5 2.6 0 3.4 1.7 3.4 4.2V18h-2.6v-3.7c0-1.2-.3-2.1-1.5-2.1-1.3 0-1.7.9-1.7 2.1V18h-2.6z" />
     </g>
   ),
+  github: (
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.7"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M9.5 19c-3.6 1.1-3.6-1.8-5-2.2m10 4.2v-3a2.6 2.6 0 0 0-.7-2c2.4-.3 4.9-1.2 4.9-5.3a4.1 4.1 0 0 0-1.1-2.8 3.8 3.8 0 0 0-.1-2.8s-.9-.3-2.9 1.1a10 10 0 0 0-5.2 0C7.4 4.8 6.5 5.1 6.5 5.1a3.8 3.8 0 0 0-.1 2.8 4.1 4.1 0 0 0-1.1 2.8c0 4.1 2.5 5 4.9 5.3a2.6 2.6 0 0 0-.7 2v3"
+    />
+  ),
   spotify: (
     <g fill="none" stroke="currentColor" strokeLinecap="round">
       <path d="M6.6 9.4c3.7-1.1 7.9-.8 10.9 1" strokeWidth="1.9" />

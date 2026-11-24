@@ -1,5 +1,5 @@
 import { profile } from '../data.js';
-import resumeUrl from '../docs/2026_ManasaR_SciEng.pdf';
+import resumeUrl from '../docs/Product_Resume.pdf';
 
 // The resume, shown in the browser's own PDF viewer, with links to open or download the file.
 export default function ResumePage() {
